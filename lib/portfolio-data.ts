@@ -720,6 +720,10 @@ export interface DiagNode {
   role?: string;
   why?: string;
   tech?: string;
+  /** Optional lifecycle chip rendered in the inspector header (free-form). */
+  status?: string;
+  /** Overrides the "WHY IT EXISTS" inspector row label (e.g. "FUTURE PURPOSE"). */
+  inspectorWhyLabel?: string;
   kind: NodeKind;
   layer: number;
   col: number;
@@ -996,54 +1000,187 @@ export interface AiExperiment {
 
 export const aiExperiments: AiExperiment[] = [
   {
-    key: "utkarsh-ai",
-    title: "UTKARSH AI",
+    key: "llm-exploration",
+    title: "LLM EXPLORATION",
     status: "EXPLORING",
     description:
-      "Portfolio intelligence — a conversational assistant that answers questions about my experience, projects and architecture decisions from the same structured data that powers this page.",
-    tags: ["Spring AI", "Portfolio Knowledge"],
+      "Exploring how large language models can be integrated into backend applications.",
+    tags: ["LLMs", "Backend Integration"],
   },
   {
     key: "rag",
-    title: "RAG KNOWLEDGE BASE",
+    title: "RAG",
     status: "EXPLORING",
     description:
-      "Retrieval-augmented generation over portfolio knowledge: projects, experience and architecture decisions as retrievable context.",
+      "Exploring retrieval-augmented generation for grounded responses using portfolio knowledge.",
     tags: ["RAG", "Vector Search"],
   },
   {
-    key: "agent",
+    key: "ai-agents",
     title: "AI AGENTS",
     status: "EXPLORING",
     description:
-      "Agents with typed tools — searchProjects(), getSkills(), explainArchitecture() — orchestrated like any other backend service.",
+      "Exploring agent-based workflows and tool-driven AI systems.",
     tags: ["AI Agents", "Tool Use"],
   },
   {
-    key: "llm-lab",
-    title: "LLM EXPERIMENTS",
-    status: "EXPLORING",
+    key: "spring-ai",
+    title: "SPRING AI",
+    status: "FUTURE DIRECTION",
     description:
-      "Hands-on experiments with prompting, context windows and evaluation — treating models like another distributed dependency.",
-    tags: ["LLMs", "Evaluation"],
+      "Exploring Java-native AI application development using Spring AI.",
+    tags: ["Spring AI", "Java"],
   },
   {
     key: "agentic-backend",
     title: "AGENTIC BACKEND",
     status: "FUTURE DIRECTION",
     description:
-      "Where this is heading: intelligent backends where event-driven pipelines and agentic orchestration meet — built with the same discipline as production systems.",
+      "Exploring the combination of AI agents with backend services, APIs and distributed systems.",
     tags: ["Agentic AI", "Event-Driven"],
   },
 ];
 
-export const aiEvolutionPath = [
-  { label: "JAVA BACKEND", active: true },
-  { label: "MICROSERVICES", active: true },
-  { label: "EVENT-DRIVEN SYSTEMS", active: true },
-  { label: "AI AGENTS", active: false },
-  { label: "INTELLIGENT BACKENDS", active: false },
-] as const;
+export const aiSystemStatus: Array<{ label: string; status: string }> = [
+  { label: "LLM", status: "EXPLORING" },
+  { label: "RAG", status: "EXPLORING" },
+  { label: "AI AGENTS", status: "EXPLORING" },
+  { label: "SPRING AI", status: "FUTURE DIRECTION" },
+  { label: "TOOL CALLING", status: "FUTURE DIRECTION" },
+  { label: "VECTOR SEARCH", status: "FUTURE DIRECTION" },
+];
+
+// ---------------------------------------------------------------------------
+// PLANNED AI ARCHITECTURE — interactive visualization (not implemented)
+// ---------------------------------------------------------------------------
+
+const PLANNED_AI_NODES: DiagNode[] = [
+  {
+    id: "user", label: "USER", desc: "Asks questions about the portfolio in natural language.",
+    role: "Intent entry",
+    why: "Questions about experience, projects and architecture arrive as natural language instead of hard-coded queries.",
+    tech: "Next.js UI",
+    status: "INPUT",
+    kind: "client", layer: 0, col: 1,
+  },
+  {
+    id: "uai", label: "UTKARSH AI", sub: "demo interface", desc: "The experimental console in this section — currently powered by a local portfolio matcher.",
+    role: "Portfolio intelligence interface",
+    why: "The console you are using right now — later backed by a real AI service reading this same structured data.",
+    tech: "React · Local matcher (demo)",
+    status: "EXPERIMENTAL",
+    kind: "compute", layer: 1, col: 1,
+  },
+  {
+    id: "api", label: "SPRING BOOT API", sub: "planned endpoint", desc: "Would expose portfolio-knowledge endpoints with production-grade discipline.",
+    role: "Secure gateway",
+    why: "Exposes portfolio-knowledge endpoints behind the same patterns used at work: validation, auth and observability.",
+    tech: "Spring Boot",
+    status: "PLANNED",
+    kind: "compute", layer: 2, col: 1,
+  },
+  {
+    id: "sai", label: "SPRING AI", sub: "framework", desc: "Java-native abstractions over models, embeddings and tool calling.",
+    role: "AI application framework",
+    why: "Brings model orchestration into the JVM ecosystem I already build in — no context switch to another runtime.",
+    tech: "Spring AI",
+    status: "FUTURE DIRECTION",
+    inspectorWhyLabel: "FUTURE PURPOSE",
+    kind: "ai", layer: 3, col: 1,
+  },
+  {
+    id: "llm", label: "LLM", sub: "reasoning engine", desc: "Generates responses grounded in retrieved portfolio context.",
+    role: "Reasoning engine",
+    why: "Generates candidate answers from retrieved context — treated like any other distributed dependency.",
+    tech: "LLM APIs (planned)",
+    status: "EXPLORING",
+    exploring: true,
+    inspectorWhyLabel: "FUTURE PURPOSE",
+    kind: "ai", layer: 4, col: 1,
+  },
+  {
+    id: "rag", label: "RAG · KNOWLEDGE", sub: "retrieval", desc: "Retrieves relevant portfolio information before an answer is generated.",
+    role: "Knowledge retrieval",
+    why: "Retrieve relevant portfolio/project information before generating grounded responses.",
+    tech: "Vector search (planned)",
+    status: "EXPLORING",
+    exploring: true,
+    inspectorWhyLabel: "FUTURE PURPOSE",
+    kind: "ai", layer: 5, col: 0,
+  },
+  {
+    id: "agent", label: "AI AGENT", sub: "orchestration", desc: "Plans multi-step answers and routes between retrieval and tools.",
+    role: "Orchestration",
+    why: "Plans multi-step answers and routes between retrieval, memory and tool calls.",
+    tech: "Agent runtime (planned)",
+    status: "EXPLORING",
+    exploring: true,
+    inspectorWhyLabel: "FUTURE PURPOSE",
+    kind: "ai", layer: 5, col: 1,
+  },
+  {
+    id: "tools", label: "TOOLS", sub: "typed capabilities", desc: "Callable functions scoped strictly to portfolio knowledge.",
+    role: "Typed capabilities",
+    why: "searchProjects(), getSkills(), explainArchitecture() — callable functions scoped strictly to portfolio knowledge.",
+    tech: "Tool calling (planned)",
+    status: "PLANNED",
+    inspectorWhyLabel: "FUTURE PURPOSE",
+    kind: "ai", layer: 5, col: 2,
+  },
+  {
+    id: "resp", label: "RESPONSE", desc: "Grounded answer delivered back through the same interface.",
+    role: "Grounded answer",
+    why: "Delivered back through the same interface, traceable to the portfolio data behind it.",
+    tech: "Next.js UI",
+    status: "OUTPUT",
+    kind: "client", layer: 6, col: 1,
+  },
+];
+
+export const plannedAiDiagram: ArchitectureDiagram = {
+  key: "planned-ai",
+  tab: "PLANNED AI",
+  title: "PLANNED AI ARCHITECTURE — NOT IMPLEMENTED",
+  blurb:
+    "The intended call path for a real UTKARSH AI service. Every capability beyond this demo panel is exploration or future direction.",
+  layers: ["USER", "INTERFACE", "API LAYER", "FRAMEWORK", "MODEL", "CAPABILITIES", "OUTPUT"],
+  nodes: PLANNED_AI_NODES,
+  edges: [
+    { from: "user", to: "uai" },
+    { from: "uai", to: "api" },
+    { from: "api", to: "sai" },
+    { from: "sai", to: "llm" },
+    { from: "llm", to: "rag" },
+    { from: "llm", to: "agent" },
+    { from: "agent", to: "tools" },
+    { from: "rag", to: "resp" },
+    { from: "tools", to: "resp" },
+  ],
+  exploring: true,
+};
+
+// ---------------------------------------------------------------------------
+// JAVA BACKEND → AI BRIDGE
+// ---------------------------------------------------------------------------
+
+export const aiBridge = {
+  foundation: ["JAVA", "SPRING BOOT", "MICROSERVICES", "KAFKA", "AWS"],
+  target: ["LLM", "RAG", "AGENTS"],
+  statement:
+    "Building on backend engineering foundations to explore AI-powered distributed systems.",
+};
+
+/** One hop on the evolution path: production steps are `active`, exploration targets are not. */
+export interface AiEvolutionStep {
+  label: string;
+  active: boolean;
+}
+
+/** Derived from aiBridge so the backend→AI story has a single source of truth. */
+export const aiEvolutionPath: AiEvolutionStep[] = [
+  ...aiBridge.foundation.map((label) => ({ label, active: true })),
+  ...aiBridge.target.map((label) => ({ label, active: false })),
+];
 
 export const aiDisclaimer =
   "AI Lab documents exploration and experiments — not production AI experience. The production foundation is Java, Spring and distributed systems.";

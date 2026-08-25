@@ -90,6 +90,14 @@ function InspectorRow({
   );
 }
 
+/** Lifecycle chip tone for free-form node statuses (EXPLORING / PLANNED / INPUT…). */
+function statusChipTone(status: string): string {
+  const v = status.toUpperCase();
+  if (/EXPLOR|EXPERIMENT/.test(v)) return "chip--ai";
+  if (/FUTURE|PLANNED/.test(v)) return "!border-violet/40 !bg-violet/[0.07] !text-violet/90";
+  return "";
+}
+
 export function ArchitectureGraph({
   diagram,
   className,
@@ -120,7 +128,12 @@ export function ArchitectureGraph({
     !!focusId && focusId !== id && !touchedEdges.has(`${focusId}->${id}`) && !touchedEdges.has(`${id}->${focusId}`);
 
   return (
-    <div className={cn("flex flex-col gap-5", className)}>
+    <div
+      className={cn("flex flex-col gap-5", className)}
+      onKeyDown={(e) => {
+        if (e.key === "Escape" && selectedId) setSelectedId(null);
+      }}
+    >
       {/* canvas */}
       <div className="panel corner-brackets relative overflow-hidden">
         <div className="flex items-center justify-between border-b border-line px-4 py-2.5">
@@ -327,6 +340,11 @@ export function ArchitectureGraph({
                   {focusNode.sub.toUpperCase()}
                 </span>
               )}
+              {focusNode.status && (
+                <span className={cn("chip !py-0.5 !text-[9px]", statusChipTone(focusNode.status))}>
+                  {focusNode.status.toUpperCase()}
+                </span>
+              )}
               {focusNode.exploring && (
                 <span className="chip chip--ai !py-0.5 !text-[9px]">EXPLORING</span>
               )}
@@ -337,7 +355,7 @@ export function ArchitectureGraph({
                 {focusNode.role ?? focusNode.desc}
               </InspectorRow>
               {(focusNode.why || !focusNode.role) && (
-                <InspectorRow label={focusNode.why ? "WHY IT EXISTS" : "ABOUT"}>
+                <InspectorRow label={focusNode.why ? focusNode.inspectorWhyLabel ?? "WHY IT EXISTS" : "ABOUT"}>
                   {focusNode.why ?? focusNode.desc}
                 </InspectorRow>
               )}
@@ -349,6 +367,9 @@ export function ArchitectureGraph({
                 </InspectorRow>
               )}
             </dl>
+            <p className="mt-3 font-mono text-[8.5px] tracking-[0.22em] text-ink-faint/80">
+              ESC TO CLEAR SELECTION
+            </p>
           </div>
         ) : (
           <p className="pt-2 font-mono text-[11px] leading-relaxed tracking-[0.18em] text-ink-faint">
