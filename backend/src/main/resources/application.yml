@@ -1,0 +1,75 @@
+server:
+  # 8080 commonly collides with local Apache/XAMPP installs.
+  port: ${SERVER_PORT:8090}
+
+spring:
+  application:
+    name: portfolio-ai-backend
+  # The pgvector backend builds its own pooled DataSource from environment
+  # variables (PgVectorStoreConfig); Spring's DataSource auto-configuration is
+  # never wanted here and must not fail boot in file mode.
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+  ai:
+    openai:
+      # Provider is configurable through environment variables only.
+      # Works with OpenAI or any OpenAI-compatible endpoint (base-url override).
+      api-key: ${SPRING_AI_OPENAI_API_KEY:}
+      base-url: ${SPRING_AI_OPENAI_BASE_URL:https://api.openai.com}
+      chat:
+        options:
+          model: ${SPRING_AI_OPENAI_MODEL:gpt-4o-mini}
+          temperature: ${SPRING_AI_TEMPERATURE:0.3}
+      embedding:
+        options:
+          # Used by the Phase 4.2 RAG layer to embed portfolio knowledge chunks.
+          model: ${SPRING_AI_OPENAI_EMBEDDING_MODEL:text-embedding-3-small}
+
+portfolio:
+  ai:
+    response-source: portfolio
+    system-prompt: >-
+      You are UTKARSH AI, an assistant embedded in Utkarsh Singh's developer
+      portfolio. Answer ONLY from the facts below and stay strictly honest.
+
+
+      PRODUCTION EXPERIENCE (real, professional): Java, Spring Boot, Spring
+      MVC, Spring Security, Spring Cloud, REST APIs, Hibernate/JPA,
+      microservices, distributed systems, event-driven architecture, Kafka,
+      PostgreSQL optimization (30% latency reduction), Redis caching,
+      Resilience4j circuit breakers/retries, AWS (S3, CloudWatch, Glue,
+      Athena), Docker, Kubernetes, Jenkins CI/CD, JUnit/Mockito. Employer:
+      EdgeVerve Systems (An Infosys Company), Product Developer, Bangalore.
+      Education: B.E. Computer Science, BIT Mesra (2017-2021).
+
+
+      AI TOPICS (LLMs, RAG, AI agents, agentic systems, Spring AI): these are
+      EXPLORATION and FUTURE DIRECTION only. Never describe them as production
+      experience or professional work. If asked what he does professionally,
+      say backend engineering — not AI development.
+
+
+      RULES: Do not invent employers, metrics, projects or credentials. If a
+      question goes beyond this knowledge, say you can only answer about
+      Utkarsh's portfolio. Keep answers concise and technical.
+    rag:
+      enabled: ${PORTFOLIO_AI_RAG_ENABLED:true}
+      # "file" (default): zero-infra local persistence | "pgvector": PostgreSQL + pgvector
+      store-type: ${PORTFOLIO_AI_RAG_STORE_TYPE:file}
+      top-k: ${PORTFOLIO_AI_RAG_TOP_K:4}
+      similarity-threshold: ${PORTFOLIO_AI_RAG_SIMILARITY_THRESHOLD:0.3}
+      # File mode: persisted vector index + hash state — loaded on restart,
+      # only changed chunks are re-embedded.
+      index-file: ${PORTFOLIO_AI_RAG_INDEX_FILE:./data/portfolio-index.json}
+      rebuild-on-startup: ${PORTFOLIO_AI_RAG_REBUILD:false}
+      dimensions: ${PORTFOLIO_AI_EMBEDDING_DIMENSIONS:1536}
+      # pgvector backend connection (only used when store-type=pgvector)
+      pg-url: ${PORTFOLIO_AI_RAG_PG_URL:jdbc:postgresql://localhost:5432/portfolio_ai}
+      pg-username: ${PORTFOLIO_AI_RAG_PG_USERNAME:portfolio_ai}
+      pg-password: ${PORTFOLIO_AI_RAG_PG_PASSWORD:}
+      pg-table: ${PORTFOLIO_AI_RAG_PG_TABLE:portfolio_knowledge}
+
+# Phase roadmap (do not implement ahead of schedule):
+#   4.2 portfolio knowledge / RAG + 4.3 production vector store (this file) ->
+#   4.4 AI tools -> 4.5 agent orchestration -> 4.6 Next.js AI Lab integration

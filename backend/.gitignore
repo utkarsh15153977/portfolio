@@ -1,0 +1,17 @@
+target/
+!.mvn/wrapper/maven-wrapper.jar
+data/
+tools/.compiled/
+
+### IDEs ###
+.idea/
+*.iml
+.vscode/
+.classpath
+.project
+.settings/
+
+### secrets — never commit API keys ###
+.env
+.env.*
+*.pem
