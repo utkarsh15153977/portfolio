@@ -50,6 +50,17 @@
       <artifactId>spring-ai-starter-model-openai</artifactId>
     </dependency>
 
+    <!-- Local development provider (zero paid API usage): Ollama.
+         Selected via PORTFOLIO_AI_PROVIDER=ollama (the default); the
+         spring.ai.model.chat/embedding properties exclude the other
+         provider's auto-configuration entirely, so only ONE model stack is
+         ever initialized. OpenAI remains available for production through
+         PORTFOLIO_AI_PROVIDER=openai. -->
+    <dependency>
+      <groupId>org.springframework.ai</groupId>
+      <artifactId>spring-ai-starter-model-ollama</artifactId>
+    </dependency>
+
     <!-- Phase 4.2: in-process simple vector store (no external infrastructure).
          Retained as the default zero-infra mode for local dev/tests. -->
     <dependency>

@@ -5,71 +5,180 @@ server:
 spring:
   application:
     name: portfolio-ai-backend
-  # The pgvector backend builds its own pooled DataSource from environment
-  # variables (PgVectorStoreConfig); Spring's DataSource auto-configuration is
-  # never wanted here and must not fail boot in file mode.
+
+  # The pgvector backend creates its own DataSource.
+  # We do not want Spring Boot creating a separate default DataSource.
   autoconfigure:
     exclude:
       - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+
+      # This application only needs Chat + Embedding models.
+      # Disable unused OpenAI modalities.
+      - org.springframework.ai.model.openai.autoconfigure.OpenAiAudioSpeechAutoConfiguration
+      - org.springframework.ai.model.openai.autoconfigure.OpenAiAudioTranscriptionAutoConfiguration
+      - org.springframework.ai.model.openai.autoconfigure.OpenAiImageAutoConfiguration
+      - org.springframework.ai.model.openai.autoconfigure.OpenAiModerationAutoConfiguration
+
   ai:
+    # =========================================================
+    # AI PROVIDER
+    # =========================================================
+    #
+    # ollama = FREE LOCAL DEVELOPMENT
+    # openai = PAID / production option
+    #
+    # We are using Ollama now.
+    #
+    model:
+      chat: ${PORTFOLIO_AI_PROVIDER:ollama}
+      embedding: ${PORTFOLIO_AI_PROVIDER:ollama}
+
+    # =========================================================
+    # OLLAMA
+    # =========================================================
+    ollama:
+      base-url: ${SPRING_AI_OLLAMA_BASE_URL:http://localhost:11434}
+
+      chat:
+        options:
+          # Local chat model
+          model: ${SPRING_AI_OLLAMA_CHAT_MODEL:qwen2.5-coder:3b}
+          temperature: ${SPRING_AI_TEMPERATURE:0.3}
+
+      embedding:
+        options:
+          # Local embedding model
+          model: ${SPRING_AI_OLLAMA_EMBEDDING_MODEL:nomic-embed-text}
+
+    # =========================================================
+    # OPENAI
+    # =========================================================
+    #
+    # Kept for future production usage.
+    # NOT USED while PORTFOLIO_AI_PROVIDER=ollama.
+    #
     openai:
-      # Provider is configurable through environment variables only.
-      # Works with OpenAI or any OpenAI-compatible endpoint (base-url override).
       api-key: ${SPRING_AI_OPENAI_API_KEY:}
+
       base-url: ${SPRING_AI_OPENAI_BASE_URL:https://api.openai.com}
+
       chat:
         options:
           model: ${SPRING_AI_OPENAI_MODEL:gpt-4o-mini}
           temperature: ${SPRING_AI_TEMPERATURE:0.3}
+
       embedding:
         options:
-          # Used by the Phase 4.2 RAG layer to embed portfolio knowledge chunks.
           model: ${SPRING_AI_OPENAI_EMBEDDING_MODEL:text-embedding-3-small}
+
+
+# =============================================================
+# PORTFOLIO AI
+# =============================================================
 
 portfolio:
   ai:
     response-source: portfolio
+
+    # =========================================================
+    # AGENT (PHASE 4.5)
+    # =========================================================
+    #
+    # Opt-in agent orchestration. The default stays false so the existing
+    # RAG chat path is never changed accidentally.
+    agent:
+      enabled: ${PORTFOLIO_AI_AGENT_ENABLED:false}
+
+    # =========================================================
+    # SYSTEM PROMPT
+    # =========================================================
     system-prompt: >-
       You are UTKARSH AI, an assistant embedded in Utkarsh Singh's developer
       portfolio. Answer ONLY from the facts below and stay strictly honest.
-
 
       PRODUCTION EXPERIENCE (real, professional): Java, Spring Boot, Spring
       MVC, Spring Security, Spring Cloud, REST APIs, Hibernate/JPA,
       microservices, distributed systems, event-driven architecture, Kafka,
       PostgreSQL optimization (30% latency reduction), Redis caching,
       Resilience4j circuit breakers/retries, AWS (S3, CloudWatch, Glue,
-      Athena), Docker, Kubernetes, Jenkins CI/CD, JUnit/Mockito. Employer:
-      EdgeVerve Systems (An Infosys Company), Product Developer, Bangalore.
-      Education: B.E. Computer Science, BIT Mesra (2017-2021).
+      Athena), Docker, Kubernetes, Jenkins CI/CD, JUnit/Mockito.
 
+      Employer: EdgeVerve Systems (An Infosys Company), Product Developer,
+      Bangalore.
+
+      Education: B.E. Computer Science, BIT Mesra (2017-2021).
 
       AI TOPICS (LLMs, RAG, AI agents, agentic systems, Spring AI): these are
       EXPLORATION and FUTURE DIRECTION only. Never describe them as production
-      experience or professional work. If asked what he does professionally,
-      say backend engineering — not AI development.
+      experience or professional work.
 
+      If asked what he does professionally, say backend engineering, not AI
+      development.
 
-      RULES: Do not invent employers, metrics, projects or credentials. If a
-      question goes beyond this knowledge, say you can only answer about
-      Utkarsh's portfolio. Keep answers concise and technical.
+      RULES: Do not invent employers, metrics, projects or credentials.
+      If a question goes beyond this knowledge, say you can only answer about
+      Utkarsh's portfolio.
+
+      Keep answers concise and technical.
+
+    # =========================================================
+    # RAG
+    # =========================================================
     rag:
+      # RAG enabled
       enabled: ${PORTFOLIO_AI_RAG_ENABLED:true}
-      # "file" (default): zero-infra local persistence | "pgvector": PostgreSQL + pgvector
-      store-type: ${PORTFOLIO_AI_RAG_STORE_TYPE:file}
+
+      # IMPORTANT:
+      # Use PostgreSQL + pgvector instead of local JSON file storage.
+      store-type: ${PORTFOLIO_AI_RAG_STORE_TYPE:pgvector}
+
+      # Embeddings come from Ollama.
+      provider: ${PORTFOLIO_AI_PROVIDER:ollama}
+
+      # Number of chunks returned from similarity search.
       top-k: ${PORTFOLIO_AI_RAG_TOP_K:4}
+
+      # Minimum similarity score.
       similarity-threshold: ${PORTFOLIO_AI_RAG_SIMILARITY_THRESHOLD:0.3}
-      # File mode: persisted vector index + hash state — loaded on restart,
-      # only changed chunks are re-embedded.
+
+      # Used only by FILE mode.
+      # Kept here so file mode remains available if needed later.
       index-file: ${PORTFOLIO_AI_RAG_INDEX_FILE:./data/portfolio-index.json}
+
+      # Do not force rebuild every startup.
       rebuild-on-startup: ${PORTFOLIO_AI_RAG_REBUILD:false}
-      dimensions: ${PORTFOLIO_AI_EMBEDDING_DIMENSIONS:1536}
-      # pgvector backend connection (only used when store-type=pgvector)
+
+      # Embedding dimensions. 0 = derive from the active provider
+      # (ollama -> nomic-embed-text = 768, openai -> text-embedding-3-small = 1536).
+      # Override only when you need a non-default model.
+      dimensions: ${PORTFOLIO_AI_EMBEDDING_DIMENSIONS:0}
+
+      # =======================================================
+      # POSTGRESQL + PGVECTOR
+      # =======================================================
+
+      # Your PostgreSQL database
       pg-url: ${PORTFOLIO_AI_RAG_PG_URL:jdbc:postgresql://localhost:5432/portfolio_ai}
-      pg-username: ${PORTFOLIO_AI_RAG_PG_USERNAME:portfolio_ai}
+
+      # Your PostgreSQL user
+      pg-username: ${PORTFOLIO_AI_RAG_PG_USERNAME:postgres}
+
+      # IMPORTANT:
+      # Put your actual PostgreSQL password in the environment
+      # variable instead of committing it to Git.
       pg-password: ${PORTFOLIO_AI_RAG_PG_PASSWORD:}
+
+      # Table where Spring AI / pgvector stores portfolio embeddings.
       pg-table: ${PORTFOLIO_AI_RAG_PG_TABLE:portfolio_knowledge}
 
-# Phase roadmap (do not implement ahead of schedule):
-#   4.2 portfolio knowledge / RAG + 4.3 production vector store (this file) ->
-#   4.4 AI tools -> 4.5 agent orchestration -> 4.6 Next.js AI Lab integration
+
+# =============================================================
+# PHASE ROADMAP
+# =============================================================
+#
+# 4.2 Portfolio Knowledge / RAG
+# 4.3 Production Vector Store
+# 4.4 AI Tools
+# 4.5 Agent Orchestration
+# 4.6 Next.js AI Lab Integration
+#

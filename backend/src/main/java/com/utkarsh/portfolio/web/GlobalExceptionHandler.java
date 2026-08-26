@@ -41,6 +41,15 @@ public class GlobalExceptionHandler {
                 .body(new ApiError("AI provider unavailable - try again later"));
     }
 
+    @ExceptionHandler(org.springframework.ai.tool.execution.ToolExecutionException.class)
+    public ResponseEntity<ApiError> handleToolFailure(Exception ex) {
+        // Phase 4.5: a portfolio tool failed mid-conversation. Spring AI usually
+        // feeds tool errors back to the model itself; if one escapes we still map
+        // it to a safe 502 without leaking tool internals or stack traces.
+        return ResponseEntity.status(HttpStatus.BAD_GATEWAY)
+                .body(new ApiError("AI provider unavailable - try again later"));
+    }
+
     @ExceptionHandler(IllegalStateException.class)
     public ResponseEntity<ApiError> handleIllegalState(IllegalStateException ex) {
         // Spring AI surfaces missing/blank keys and client build issues as ISE.

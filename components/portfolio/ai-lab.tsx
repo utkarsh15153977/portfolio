@@ -1,5 +1,6 @@
 import { ArrowRight, FlaskConical, Sparkles } from "lucide-react";
 import { SectionShell } from "@/components/portfolio/section-shell";
+import { AiAgentChat } from "@/components/portfolio/ai-agent-chat";
 import { Reveal } from "@/components/ui/reveal";
 import {
   aiDisclaimer,
@@ -42,6 +43,11 @@ export function AiLab() {
           <FlaskConical className="size-3.5 shrink-0" aria-hidden />
           {aiDisclaimer.toUpperCase()}
         </p>
+      </Reveal>
+
+      {/* live agent console (Phase 4.6) */}
+      <Reveal delay={0.02} className="mb-10">
+        <AiAgentChat />
       </Reveal>
 
       {/* evolution path */}
@@ -117,13 +123,13 @@ export function AiLab() {
         ))}
       </div>
 
-      {/* phase 2 call path */}
+      {/* phase 4.6 call path */}
       <Reveal delay={0.06}>
         <aside className="mt-10 border border-line bg-surface-2/50 p-6 sm:p-7">
           <p className="font-mono text-[9px] tracking-[0.3em] text-ink-faint">
-            PLANNED CALL PATH — ARCHITECTED, NOT YET WIRED
+            LIVE CALL PATH — WIRED IN PHASE 4.6
           </p>
-          <ol className="mt-4 flex flex-wrap items-center gap-x-2 gap-y-2" aria-label="Planned Phase 2 architecture call path">
+          <ol className="mt-4 flex flex-wrap items-center gap-x-2 gap-y-2" aria-label="Live Phase 4.6 architecture call path">
             {PHASE2_PATH.map((node, i) => (
               <li key={node} className="flex items-center gap-2">
                 <span
@@ -131,19 +137,19 @@ export function AiLab() {
                     "border px-2.5 py-1.5 font-mono text-[9.5px] tracking-[0.16em]",
                     i === 0
                       ? "border-accent/40 bg-accent-soft text-accent"
-                      : "border-dashed border-line-strong text-ink-faint"
+                      : "border-line-strong text-ink-dim"
                   )}
                 >
                   {node}
                 </span>
                 {i < PHASE2_PATH.length - 1 && (
-                  <span aria-hidden className="font-mono text-[10px] text-ink-faint">→</span>
+                  <span aria-hidden className="font-mono text-[10px] text-accent/60">→</span>
                 )}
               </li>
             ))}
             <li className="flex items-center gap-2">
-              <span aria-hidden className="font-mono text-[10px] text-ink-faint">→</span>
-              <span className="border border-dashed border-warn/40 px-2.5 py-1.5 font-mono text-[9.5px] tracking-[0.16em] text-warn/90">
+              <span aria-hidden className="font-mono text-[10px] text-accent/60">→</span>
+              <span className="border border-warn/40 bg-warn/[0.06] px-2.5 py-1.5 font-mono text-[9.5px] tracking-[0.16em] text-warn/90">
                 TOOLS · searchProjects() getSkills() explainArchitecture()
               </span>
             </li>

@@ -1,6 +1,7 @@
 package com.utkarsh.portfolio.web;
 
 import com.utkarsh.portfolio.ai.PortfolioChatService;
+import com.utkarsh.portfolio.config.PortfolioAgentProperties;
 import com.utkarsh.portfolio.config.PortfolioAiProperties;
 import com.utkarsh.portfolio.config.PortfolioRagProperties;
 import com.utkarsh.portfolio.web.dto.ChatRequest;
@@ -33,15 +34,18 @@ public class AiChatController {
     private final PortfolioAiProperties properties;
     private final boolean providerConfigured;
     private final boolean ragEnabled;
+    private final boolean agentEnabled;
 
     public AiChatController(PortfolioChatService chatService,
                             PortfolioAiProperties properties,
                             PortfolioRagProperties ragProperties,
+                            PortfolioAgentProperties agentProperties,
                             @Value("${spring.ai.openai.api-key:}") String apiKey) {
         this.chatService = chatService;
         this.properties = properties;
         this.providerConfigured = apiKey != null && !apiKey.isBlank();
         this.ragEnabled = ragProperties.enabled();
+        this.agentEnabled = agentProperties.enabled();
     }
 
     @PostMapping("/chat")
@@ -52,16 +56,17 @@ public class AiChatController {
 
     /**
      * Lightweight readiness probe for Phase 4.6 (Next.js integration) and local
-     * verification — reports phase, RAG readiness and whether a provider key has
-     * been configured, without ever revealing it.
+     * verification — reports phase, RAG readiness, agent flag and whether a
+     * provider key has been configured, without ever revealing it.
      */
     @GetMapping("/status")
     public ResponseEntity<Map<String, Object>> status() {
         return ResponseEntity.ok(Map.of(
                 "status", "UP",
-                "phase", "4.3-persistent-vector-store",
+                "phase", "4.5-agent-orchestration",
                 "providerConfigured", providerConfigured,
-                "ragEnabled", ragEnabled
+                "ragEnabled", ragEnabled,
+                "agentEnabled", agentEnabled
         ));
     }
 }

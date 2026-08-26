@@ -12,11 +12,18 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  *               index + hash-state persisted under index-file.
  *  - "pgvector" production PostgreSQL + pgvector persistence; connection
  *               details come exclusively from environment variables.
+ *
+ * provider mirrors the model provider switch (PORTFOLIO_AI_PROVIDER,
+ * default "ollama"). It is used ONLY to derive embedding defaults:
+ *  - openai -> text-embedding-3-small, 1536 dimensions
+ *  - ollama -> nomic-embed-text,       768 dimensions
+ * It never selects or initializes models by itself.
  */
 @ConfigurationProperties(prefix = "portfolio.ai.rag")
 public record PortfolioRagProperties(
         boolean enabled,
         String storeType,
+        String provider,
         int topK,
         double similarityThreshold,
         String indexFile,
@@ -27,6 +34,10 @@ public record PortfolioRagProperties(
         String pgPassword,
         String pgTable) {
 
+    /** Default embedding dimensions per supported provider. */
+    public static final int OPENAI_EMBEDDING_DIMENSIONS = 1536;
+    public static final int OLLAMA_EMBEDDING_DIMENSIONS = 768;
+
     public PortfolioRagProperties {
         if (storeType == null || storeType.isBlank()) {
             storeType = "file";
@@ -35,6 +46,18 @@ public record PortfolioRagProperties(
         if (!storeType.equals("file") && !storeType.equals("pgvector")) {
             throw new IllegalArgumentException(
                     "portfolio.ai.rag.store-type must be 'file' or 'pgvector', got: " + storeType);
+        }
+        if (provider == null || provider.isBlank()) {
+            // Must match the application.yml provider default (local dev).
+            provider = "ollama";
+        }
+        // NOTE: within a record's compact constructor only the PARAMETERS hold
+        // values (fields are assigned afterwards), so normalization and
+        // derivation below must use the local variable — never instance methods.
+        provider = provider.strip().toLowerCase();
+        if (!provider.equals("openai") && !provider.equals("ollama")) {
+            throw new IllegalArgumentException(
+                    "portfolio.ai.rag.provider must be 'openai' or 'ollama', got: " + provider);
         }
         if (topK <= 0) {
             topK = 4;
@@ -49,7 +72,9 @@ public record PortfolioRagProperties(
             indexFile = "./data/portfolio-index.json";
         }
         if (dimensions <= 0) {
-            dimensions = 1536;
+            dimensions = "openai".equals(provider)
+                    ? OPENAI_EMBEDDING_DIMENSIONS
+                    : OLLAMA_EMBEDDING_DIMENSIONS;
         }
         if (pgUrl == null) {
             pgUrl = "";
@@ -67,5 +92,9 @@ public record PortfolioRagProperties(
 
     public boolean isPgVector() {
         return "pgvector".equals(storeType);
+    }
+
+    public boolean isOpenAi() {
+        return "openai".equals(provider);
     }
 }

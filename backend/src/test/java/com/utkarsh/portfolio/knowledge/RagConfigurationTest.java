@@ -32,7 +32,11 @@ class RagConfigurationTest {
         PortfolioRagProperties props = bind(Map.of("portfolio.ai.rag.enabled", "true"));
         assertThat(props.storeType()).isEqualTo("file");
         assertThat(props.isPgVector()).isFalse();
-        assertThat(props.dimensions()).isEqualTo(1536);
+        // Default provider is ollama (local dev) -> nomic-embed-text, 768 dims.
+        assertThat(props.provider()).isEqualTo("ollama");
+        assertThat(props.dimensions())
+                .isEqualTo(PortfolioRagProperties.OLLAMA_EMBEDDING_DIMENSIONS)
+                .isEqualTo(768);
         assertThat(props.pgTable()).isEqualTo("portfolio_knowledge");
     }
 

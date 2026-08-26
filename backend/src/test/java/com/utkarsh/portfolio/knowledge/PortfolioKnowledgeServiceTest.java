@@ -36,7 +36,7 @@ class PortfolioKnowledgeServiceTest {
         service = new PortfolioKnowledgeService(
                 vectorStore,
                 new PortfolioRagProperties(
-                        true, "file", 4, 0.1, "./data/test-index.json", false,
+                        true, "file", "openai", 4, 0.1, "./data/test-index.json", false,
                         1536, "", "", "", "portfolio_knowledge"));
     }
 

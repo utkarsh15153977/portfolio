@@ -64,7 +64,7 @@ class PortfolioIndexInitializerTest {
 
     private PortfolioRagProperties props(String indexFile, boolean rebuild) {
         return new PortfolioRagProperties(
-                true, "file", 4, 0.3, indexFile, rebuild,
+                true, "file", "openai", 4, 0.3, indexFile, rebuild,
                 1536, "", "", "", "portfolio_knowledge");
     }
 

@@ -112,8 +112,9 @@ class AiChatControllerTest {
         mockMvc.perform(get("/api/ai/status"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.status").value("UP"))
-                .andExpect(jsonPath("$.phase").value("4.3-persistent-vector-store"))
+                .andExpect(jsonPath("$.phase").value("4.5-agent-orchestration"))
                 .andExpect(jsonPath("$.providerConfigured").value(false))
-                .andExpect(jsonPath("$.ragEnabled").value(true));
+                .andExpect(jsonPath("$.ragEnabled").value(true))
+                .andExpect(jsonPath("$.agentEnabled").value(false));
     }
 }

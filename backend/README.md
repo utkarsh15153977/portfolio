@@ -85,4 +85,7 @@ mvn verify
 | 4.5 | Agent orchestration |
 | 4.6 | Connect Next.js AI Lab to this backend |
 
-The frontend keeps using `lib/ai-demo.ts` as its local demo until Phase 4.6.
+Phase 4.6 is wired: the Next.js AI Lab calls this backend's
+`POST /api/ai/agent/chat` through a Next.js route handler proxy
+(`app/api/ai-agent-chat/route.ts`); the old frontend demo (`lib/ai-demo.ts`)
+has been removed.
