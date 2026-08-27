@@ -151,12 +151,8 @@ export function Experience() {
       id="experience"
       index="03"
       kicker="PROFESSIONAL EXPERIENCE"
-      title={
-        <>
-          THREE YEARS IN <span className="text-accent">PRODUCTION.</span>
-        </>
-      }
-      description="Core banking systems at scale — where correctness, resilience and observability are not optional."
+      title="PRODUCTION BACKEND EXPERIENCE"
+      description={`${profile.experienceYears} building Java microservices and distributed systems at ${experience.company}`}
     >
       <div ref={sectionRef}>
         {/* company header */}
