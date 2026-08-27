@@ -1,4 +1,4 @@
-import { ArrowRight, FlaskConical, Sparkles } from "lucide-react";
+import { FlaskConical, Sparkles } from "lucide-react";
 import { SectionShell } from "@/components/portfolio/section-shell";
 import { AiAgentChat } from "@/components/portfolio/ai-agent-chat";
 import { Reveal } from "@/components/ui/reveal";
@@ -6,6 +6,7 @@ import {
   aiDisclaimer,
   aiExperiments,
   type AiStatus,
+  ragFlowSteps,
 } from "@/lib/portfolio-data";
 import { aiEvolutionPath } from "@/lib/portfolio-data";
 import { cn } from "@/lib/utils";

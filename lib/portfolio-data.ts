@@ -1180,7 +1180,15 @@ export interface AiEvolutionStep {
 export const aiDisclaimer =
   "AI Lab documents exploration and experiments — not production AI experience. The production foundation is Java, Spring and distributed systems.";
 
-export const ragFlowSteps = [
+export interface RagFlowStep {
+  id: string;
+  label: string;
+  desc: string;
+  status: "SOURCE" | "EXPLORING" | "FUTURE";
+  tech: string;
+}
+
+export const ragFlowSteps: RagFlowStep[] = [
   {
     id: "documents",
     label: "DOCUMENTS",
