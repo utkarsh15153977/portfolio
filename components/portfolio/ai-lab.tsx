@@ -4,10 +4,11 @@ import { AiAgentChat } from "@/components/portfolio/ai-agent-chat";
 import { Reveal } from "@/components/ui/reveal";
 import {
   aiDisclaimer,
-  aiEvolutionPath,
   aiExperiments,
   type AiStatus,
+  type AiEvolutionStep,
 } from "@/lib/portfolio-data";
+import { aiEvolutionPath } from "@/lib/portfolio-data";
 import { cn } from "@/lib/utils";
 
 const STATUS_STYLE: Record<AiStatus, string> = {

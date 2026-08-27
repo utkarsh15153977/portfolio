@@ -1185,6 +1185,11 @@ export const aiEvolutionPath: AiEvolutionStep[] = [
 export const aiDisclaimer =
   "AI Lab documents exploration and experiments — not production AI experience. The production foundation is Java, Spring and distributed systems.";
 
+export const aiEvolutionPath: AiEvolutionStep[] = [
+  ...aiBridge.foundation.map((label) => ({ label, active: true })),
+  ...aiBridge.target.map((label) => ({ label, active: false })),
+];
+
 // ---------------------------------------------------------------------------
 // BEYOND CODE — editable placeholders, nothing fabricated
 // ---------------------------------------------------------------------------
