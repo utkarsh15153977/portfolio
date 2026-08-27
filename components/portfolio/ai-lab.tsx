@@ -6,7 +6,6 @@ import {
   aiDisclaimer,
   aiExperiments,
   type AiStatus,
-  type AiEvolutionStep,
 } from "@/lib/portfolio-data";
 import { aiEvolutionPath } from "@/lib/portfolio-data";
 import { cn } from "@/lib/utils";
