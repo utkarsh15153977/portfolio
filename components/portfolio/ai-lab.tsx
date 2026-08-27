@@ -33,10 +33,10 @@ export function AiLab() {
       kicker="AI LAB — FUTURE DIRECTION"
       title={
         <>
-          EXPLORING <span className="text-warn">INTELLIGENT SYSTEMS.</span>
+          EXTENDING BACKENDS WITH <span className="text-warn">AI</span>
         </>
       }
-      description="The production foundation is Java and distributed systems. The AI Lab is where that foundation is being extended — experiments and direction, honestly labeled."
+      description="My production foundation is Java, Spring Boot and distributed systems. The AI Lab explores how LLMs, RAG and agentic workflows can extend that foundation."
     >
       {/* disclaimer */}
       <Reveal>
