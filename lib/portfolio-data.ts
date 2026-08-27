@@ -1180,6 +1180,51 @@ export interface AiEvolutionStep {
 export const aiDisclaimer =
   "AI Lab documents exploration and experiments — not production AI experience. The production foundation is Java, Spring and distributed systems.";
 
+export const ragFlowSteps = [
+  {
+    id: "documents",
+    label: "DOCUMENTS",
+    desc: "Portfolio knowledge base - experience, projects, skills.",
+    status: "SOURCE",
+    tech: "Markdown · JSON"
+  },
+  {
+    id: "chunking",
+    label: "CHUNKING",
+    desc: "Breaking content into meaningful sections for retrieval.",
+    status: "EXPLORING",
+    tech: "Text segmentation"
+  },
+  {
+    id: "embeddings",
+    label: "EMBEDDINGS",
+    desc: "Numerical representations capturing semantic meaning.",
+    status: "FUTURE",
+    tech: "Vector models"
+  },
+  {
+    id: "vector",
+    label: "VECTOR SEARCH",
+    desc: "Finding relevant content based on semantic similarity.",
+    status: "FUTURE",
+    tech: "Nearest neighbor"
+  },
+  {
+    id: "retrieval",
+    label: "RETRIEVAL",
+    desc: "Fetching relevant knowledge for response generation.",
+    status: "FUTURE",
+    tech: "RAG pipeline"
+  },
+  {
+    id: "llm",
+    label: "LLM",
+    desc: "Generating responses grounded in retrieved context.",
+    status: "FUTURE",
+    tech: "Language model"
+  }
+] as const;
+
 export const aiEvolutionPath: AiEvolutionStep[] = [
   ...aiBridge.foundation.map((label) => ({ label, active: true })),
   ...aiBridge.target.map((label) => ({ label, active: false })),

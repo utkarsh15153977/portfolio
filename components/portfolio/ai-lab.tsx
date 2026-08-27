@@ -50,37 +50,104 @@ export function AiLab() {
         <AiAgentChat />
       </Reveal>
 
-      {/* evolution path */}
+      {/* interactive evolution path */}
       <Reveal delay={0.04}>
-        <div className="panel mb-10 overflow-x-auto p-6 sm:p-7" aria-label="Evolution path from backend to intelligent systems">
+        <div className="panel mb-10 p-6 sm:p-7" aria-label="Evolution path from backend to intelligent systems">
           <p className="mb-5 font-mono text-[9px] tracking-[0.3em] text-ink-faint">
-            EVOLUTION PATH
+            ENGINEERING EVOLUTION PATH
           </p>
-          <ol className="flex min-w-[720px] items-center gap-2">
-            {aiEvolutionPath.map((step, i) => (
-              <li key={step.label} className="flex items-center gap-2">
-                <span
-                  className={cn(
-                    "whitespace-nowrap border px-3 py-2 font-mono text-[10px] tracking-[0.18em]",
-                    step.active
-                      ? "border-accent/50 bg-accent-soft text-accent"
-                      : "border-dashed border-warn/40 bg-warn/[0.04] text-warn/80"
-                  )}
-                >
-                  {step.label}
-                  {!step.active && (
-                    <span className="ml-2 inline-block size-1 animate-pulse-dot rounded-full bg-warn align-middle" aria-hidden />
-                  )}
-                </span>
-                {i < aiEvolutionPath.length - 1 && (
-                  <ArrowRight
-                    className={cn("size-3.5 shrink-0", step.active ? "text-accent/60" : "text-warn/50")}
-                    aria-hidden
-                  />
-                )}
-              </li>
-            ))}
-          </ol>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+            <div className="border-b border-line pb-4 sm:border-b-0 sm:border-r sm:pb-0 sm:pr-4">
+              <h3 className="mb-2 font-mono text-[10px] tracking-[0.2em] text-accent">
+                PRODUCTION FOUNDATION
+              </h3>
+              <ul className="space-y-2">
+                {aiEvolutionPath
+                  .filter(step => step.active)
+                  .map(step => (
+                    <li key={step.label} className="flex items-start gap-2">
+                      <span className="inline-flex size-2 translate-y-1 rounded-full bg-accent" aria-hidden />
+                      <span className="font-mono text-[11px] leading-relaxed tracking-[0.16em] text-ink">
+                        {step.label}
+                      </span>
+                    </li>
+                  ))}
+              </ul>
+            </div>
+            <div className="border-b border-line pb-4 sm:border-b-0 sm:border-r sm:pb-0 sm:pr-4">
+              <h3 className="mb-2 font-mono text-[10px] tracking-[0.2em] text-warn">
+                CURRENT EXPLORATION
+              </h3>
+              <ul className="space-y-2">
+                {aiExperiments
+                  .filter(exp => exp.status === "EXPLORING")
+                  .map(exp => (
+                    <li key={exp.key} className="flex items-start gap-2">
+                      <span className="inline-flex size-2 translate-y-1 animate-pulse rounded-full bg-warn" aria-hidden />
+                      <span className="font-mono text-[11px] leading-relaxed tracking-[0.16em] text-ink">
+                        {exp.title}
+                      </span>
+                    </li>
+                  ))}
+              </ul>
+            </div>
+            <div>
+              <h3 className="mb-2 font-mono text-[10px] tracking-[0.2em] text-violet">
+                FUTURE DIRECTION
+              </h3>
+              <ul className="space-y-2">
+                {aiEvolutionPath
+                  .filter(step => !step.active)
+                  .map(step => (
+                    <li key={step.label} className="flex items-start gap-2">
+                      <span className="inline-flex size-2 translate-y-1 rounded-full bg-violet" aria-hidden />
+                      <span className="font-mono text-[11px] leading-relaxed tracking-[0.16em] text-ink-dim">
+                        {step.label}
+                      </span>
+                    </li>
+                  ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </Reveal>
+
+      {/* RAG flow visualization */}
+      <Reveal delay={0.06}>
+        <div className="panel mb-10 p-6 sm:p-7">
+          <p className="mb-5 font-mono text-[9px] tracking-[0.3em] text-ink-faint">
+            EXPLORING RETRIEVAL-AUGMENTED GENERATION
+          </p>
+          <div className="relative">
+            <div className="absolute inset-0 grid-bg opacity-20" aria-hidden />
+            <ol className="relative z-10 grid grid-cols-2 gap-4 sm:grid-cols-6">
+              {ragFlowSteps.map((step, i) => (
+                <li key={step.id} className="flex flex-col items-center gap-2">
+                  <div className={cn(
+                    "flex size-12 items-center justify-center rounded-full border-2 font-mono text-[10px] font-bold tracking-[0.18em]",
+                    step.status === "SOURCE" ? "border-accent bg-accent-soft text-accent" :
+                    step.status === "EXPLORING" ? "border-warn bg-warn/[0.07] text-warn" :
+                    "border-violet/40 bg-violet/[0.07] text-violet"
+                  )}>
+                    {i + 1}
+                  </div>
+                  <div className="text-center">
+                    <h3 className="font-mono text-[10px] font-bold tracking-[0.16em]">
+                      {step.label}
+                    </h3>
+                    <p className="mt-1 text-[10px] leading-relaxed text-ink-dim">
+                      {step.tech}
+                    </p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+            <div className="mt-4 border-t border-line pt-4">
+              <p className="font-mono text-[9px] tracking-[0.22em] text-ink-faint">
+                CONCEPTUAL ARCHITECTURE — NOT IMPLEMENTED
+              </p>
+            </div>
+          </div>
         </div>
       </Reveal>
 
