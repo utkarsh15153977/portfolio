@@ -179,11 +179,20 @@ export function Projects() {
             ))}
           </ul>
 
-          {/* feature grid */}
+          {/* feature grid - UPDATED with specific BizFlow features */}
           <dl className="mt-7 grid grid-cols-2 gap-px overflow-hidden border border-line bg-line sm:grid-cols-4 lg:grid-cols-6" aria-label="BizFlow features">
             {[
-              "AUTH", "MULTI-TENANCY", "CUSTOMERS", "LEADS", "FOLLOW-UPS", "INVOICES",
-              "PAYMENTS", "WHATSAPP ALERTS", "DASHBOARD", "REPORTS", "STAFF",
+              "AUTHENTICATION",
+              "MULTI-TENANCY",
+              "CUSTOMER CRM",
+              "LEAD MANAGEMENT",
+              "FOLLOW-UP TRACKER",
+              "INVOICING",
+              "PAYMENT PROCESSING",
+              "WHATSAPP ALERTS",
+              "BUSINESS DASHBOARD",
+              "ANALYTICS REPORTS",
+              "STAFF MANAGEMENT"
             ].map((feature) => (
               <div key={feature} className="bg-background/60 p-3">
                 <dt className="font-mono text-[9px] tracking-[0.22em] text-ink-dim">{feature}</dt>
@@ -195,6 +204,7 @@ export function Projects() {
           </p>
         </article>
       </Reveal>
+      
       {/* project header */}
       <Reveal>
         <header className="panel corner-brackets relative overflow-hidden p-6 sm:p-8">

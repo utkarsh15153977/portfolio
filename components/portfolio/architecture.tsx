@@ -55,6 +55,10 @@ export function Architecture() {
     );
   }, [activeKey]);
 
+  // Split diagrams into production and exploration
+  const productionDiagrams = architectureDiagrams.filter(d => !d.exploring);
+  const explorationDiagrams = architectureDiagrams.filter(d => d.exploring);
+
   return (
     <SectionShell
       id="architecture"
@@ -68,56 +72,120 @@ export function Architecture() {
       description="Five blueprints, one philosophy — decouple with events, guard with resilience patterns, persist deliberately, observe everything. Select a blueprint, then click any node."
     >
       <Reveal>
-        {/* blueprint selector */}
-        <div
-          role="tablist"
-          aria-label="Architecture blueprints"
-          aria-orientation="horizontal"
-          onKeyDown={onBlueprintTablistKeyDown}
-          className="flex flex-wrap gap-2"
-        >
-          {architectureDiagrams.map((diagram, i) => {
-            const isActive = diagram.key === activeKey;
-            const isAi = !!diagram.exploring;
-            return (
-              <button
-                key={diagram.key}
-                role="tab"
-                ref={(el) => {
-                  blueprintTabRefs.current[i] = el;
-                }}
-                tabIndex={isActive ? 0 : -1}
-                aria-selected={isActive}
-                aria-controls="blueprint-panel"
-                onClick={() => setActiveKey(diagram.key)}
-                className={cn(
-                  "inline-flex items-center gap-2 border px-4 py-2.5 font-mono text-[10.5px] tracking-[0.2em] transition-all sm:text-[11px]",
-                  isActive
-                    ? isAi
+        {/* Production Foundation Section */}
+        <div className="mb-4">
+          <div className="mb-3 flex items-center gap-3">
+            <span className="h-px flex-1 bg-accent/30" aria-hidden />
+            <span className="inline-flex items-center gap-2 font-mono text-[10px] tracking-[0.3em] text-accent">
+              <span className="inline-block size-2 rounded-full bg-accent" aria-hidden />
+              PRODUCTION FOUNDATION
+            </span>
+            <span className="h-px flex-1 bg-accent/30" aria-hidden />
+          </div>
+          <div
+            role="tablist"
+            aria-label="Production architecture blueprints"
+            aria-orientation="horizontal"
+            className="flex flex-wrap gap-2"
+            onKeyDown={onBlueprintTablistKeyDown} 
+          >
+            {productionDiagrams.map((diagram, i) => {
+              const isActive = diagram.key === activeKey;
+              return (
+                <button
+                  key={diagram.key}
+                  role="tab"
+                  ref={(el) => {
+                    blueprintTabRefs.current[i] = el;
+                  }}
+                  tabIndex={isActive ? 0 : -1}
+                  aria-selected={isActive}
+                  aria-controls="blueprint-panel"
+                  onClick={() => setActiveKey(diagram.key)}
+                  className={cn(
+                    "inline-flex items-center gap-2 border px-4 py-2.5 font-mono text-[10.5px] tracking-[0.2em] transition-all sm:text-[11px]",
+                    isActive
+                      ? "border-accent/60 bg-accent-soft text-accent"
+                      : "border-line text-ink-faint hover:border-line-strong hover:text-ink-dim"
+                  )}
+                >
+                  {diagram.tab}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Exploration Architecture Section */}
+        <div className="mb-4">
+          <div className="mb-3 flex items-center gap-3">
+            <span className="h-px flex-1 bg-warn/30" aria-hidden />
+            <span className="inline-flex items-center gap-2 font-mono text-[10px] tracking-[0.3em] text-warn">
+              <span className="inline-block size-2 animate-pulse rounded-full bg-warn" aria-hidden />
+              EXPLORATION ARCHITECTURE
+            </span>
+            <span className="h-px flex-1 bg-warn/30" aria-hidden />
+          </div>
+          <div
+            role="tablist"
+            aria-label="Exploration architecture blueprints"
+            aria-orientation="horizontal"
+            className="flex flex-wrap gap-2"
+            onKeyDown={onBlueprintTablistKeyDown} 
+          >
+            {explorationDiagrams.map((diagram, i) => {
+              const isActive = diagram.key === activeKey;
+              const idx = productionDiagrams.length + i;
+              return (
+                <button
+                  key={diagram.key}
+                  role="tab"
+                  ref={(el) => {
+                    blueprintTabRefs.current[idx] = el;
+                  }}
+                  tabIndex={isActive ? 0 : -1}
+                  aria-selected={isActive}
+                  aria-controls="blueprint-panel"
+                  onClick={() => setActiveKey(diagram.key)}
+                  className={cn(
+                    "inline-flex items-center gap-2 border px-4 py-2.5 font-mono text-[10.5px] tracking-[0.2em] transition-all sm:text-[11px]",
+                    isActive
                       ? "border-warn/60 bg-warn/10 text-warn"
-                      : "border-accent/60 bg-accent-soft text-accent"
-                    : "border-line text-ink-faint hover:border-line-strong hover:text-ink-dim"
-                )}
-              >
-                {diagram.tab}
-                {isAi && (
-                  <span className="animate-pulse-dot inline-block size-1.5 rounded-full bg-warn" aria-hidden />
-                )}
-              </button>
-            );
-          })}
+                      : "border-line text-ink-faint hover:border-line-strong hover:text-ink-dim"
+                  )}
+                >
+                  {diagram.tab}
+                  <span className="inline-block size-1.5 animate-pulse rounded-full bg-warn" aria-hidden />
+                </button>
+              );
+            })}
+          </div>
         </div>
       </Reveal>
 
       <div ref={contentRef} id="blueprint-panel" role="tabpanel" className="mt-6">
-        <p className="mb-5 max-w-3xl text-sm leading-relaxed text-ink-dim">
-          <span className="font-mono text-accent">&gt; </span>
-          {active.blurb}
-        </p>
+        <div className="mb-5 flex flex-wrap items-start gap-3">
+          <p className="max-w-3xl text-sm leading-relaxed text-ink-dim">
+            <span className="font-mono text-accent">&gt; </span>
+            {active.blurb}
+          </p>
+          {active.exploring ? (
+            <span className="inline-flex shrink-0 items-center gap-2 border border-warn/40 bg-warn/[0.08] px-3 py-1.5 font-mono text-[9px] font-bold tracking-[0.2em] text-warn">
+              <span className="inline-block size-1.5 animate-pulse rounded-full bg-warn" aria-hidden />
+              EXPLORATION — NOT PRODUCTION
+            </span>
+          ) : (
+            <span className="inline-flex shrink-0 items-center gap-2 border border-accent/40 bg-accent/[0.08] px-3 py-1.5 font-mono text-[9px] font-bold tracking-[0.2em] text-accent">
+              <span className="inline-block size-1.5 rounded-full bg-accent" aria-hidden />
+              PRODUCTION EXPERIENCE
+            </span>
+          )}
+        </div>
 
         {active.exploring && (
           <p className="mb-5 inline-flex flex-wrap items-center gap-2 border border-warn/30 bg-warn/[0.06] px-4 py-2.5 font-mono text-[10px] tracking-[0.22em] text-warn">
-            <span className="animate-pulse-dot inline-block size-1.5 rounded-full bg-warn" aria-hidden />
+            {/* Fixed: Changed animate-pulse-dot to animate-pulse */}
+            <span className="animate-pulse inline-block size-1.5 rounded-full bg-warn" aria-hidden />
             EXPLORATION CONCEPT — NOT PRODUCTION EXPERIENCE
           </p>
         )}

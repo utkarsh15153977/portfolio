@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.tool.execution.ToolExecutionException;
 import org.springframework.ai.tool.method.MethodToolCallbackProvider;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 /**
@@ -58,46 +59,135 @@ public class PortfolioAgentService {
     private final String baseSystemPrompt;
     private final MethodToolCallbackProvider toolCallbackProvider;
 
-    public PortfolioAgentService(ChatClient chatClient,
-                                 PortfolioAiProperties properties,
-                                 MethodToolCallbackProvider portfolioToolCallbackProvider) {
+    public PortfolioAgentService(@NonNull ChatClient chatClient,
+                                 @NonNull PortfolioAiProperties properties,
+                                 @NonNull MethodToolCallbackProvider portfolioToolCallbackProvider) {
+        // Add null checks for all dependencies
+        if (chatClient == null) {
+            throw new IllegalArgumentException("ChatClient must not be null");
+        }
+        if (properties == null) {
+            throw new IllegalArgumentException("PortfolioAiProperties must not be null");
+        }
+        if (portfolioToolCallbackProvider == null) {
+            throw new IllegalArgumentException("MethodToolCallbackProvider must not be null");
+        }
+        
         this.chatClient = chatClient;
         this.baseSystemPrompt = properties.systemPrompt();
         this.toolCallbackProvider = portfolioToolCallbackProvider;
     }
 
-    public String answer(String message) {
-        if (message == null || message.isBlank()) {
+    /**
+     * Process a user message through the AI agent with tool calling capabilities.
+     *
+     * @param message The user's message/question (must not be null or blank)
+     * @return The AI agent's response
+     * @throws IllegalArgumentException if message is null or blank
+     * @throws ToolExecutionException if a tool execution fails
+     * @throws RuntimeException for other unexpected errors
+     */
+    public String answer(@NonNull String message) {
+        // Enhanced null/blank check with detailed error message
+        if (message == null) {
+            throw new IllegalArgumentException("message must not be null");
+        }
+        if (message.isBlank()) {
             throw new IllegalArgumentException("message must not be blank");
         }
+        
         long startedAt = System.nanoTime();
+        
         // Phase 4.7 observability: durations and outcomes only — the message
         // content is never logged.
+        int toolCount = toolCallbackProvider.getToolCallbacks() != null 
+                ? toolCallbackProvider.getToolCallbacks().length 
+                : 0;
         log.info("Agent request started (chars={}, tools={})",
-                message.length(), toolCallbackProvider.getToolCallbacks().length);
+                message.length(), toolCount);
+        
         try {
+            // Safely build the system prompt with null handling
+            String systemPrompt = buildSystemPrompt();
+            
             String answer = chatClient.prompt()
-                    .system(baseSystemPrompt + "\n\n" + AGENT_RULES)
+                    .system(systemPrompt)
                     // Attaches the registered provider bean itself; Spring AI 1.1.8
                     // resolves its callbacks at request time.
                     .toolCallbacks(toolCallbackProvider)
                     .user(message.strip())
                     .call()
                     .content();
+            
+            // Handle null response gracefully
+            if (answer == null) {
+                log.warn("Agent returned null response");
+                return "I apologize, but I couldn't generate a response. Please try again.";
+            }
+            
             log.info("Agent request completed ok in {} ms (answerChars={})",
                     (System.nanoTime() - startedAt) / 1_000_000,
-                    answer == null ? 0 : answer.length());
+                    answer.length());
             return answer;
+            
         } catch (ToolExecutionException e) {
+            // Safer logging with null checks
+            String toolName = e.getToolDefinition() != null 
+                    ? e.getToolDefinition().name() 
+                    : "unknown";
             log.warn("Agent tool execution failed after {} ms (tool={})",
                     (System.nanoTime() - startedAt) / 1_000_000,
-                    e.getToolDefinition().name());
+                    toolName);
+            // FIX: Correct constructor - ToolExecutionException only takes a message
+            // The original exception is already a ToolExecutionException, so we just rethrow it
             throw e;
+            
         } catch (RuntimeException e) {
             // Class name only — exception messages may contain provider details.
             log.warn("Agent request failed after {} ms: {}",
-                    (System.nanoTime() - startedAt) / 1_000_000, e.getClass().getSimpleName());
+                    (System.nanoTime() - startedAt) / 1_000_000, 
+                    e.getClass().getSimpleName());
             throw e;
+        }
+    }
+
+    /**
+     * Build the complete system prompt by combining base prompt with agent rules.
+     * Includes null safety for the base prompt.
+     *
+     * @return The complete system prompt
+     */
+    private String buildSystemPrompt() {
+        String base = baseSystemPrompt;
+        if (base == null) {
+            base = "You are a helpful portfolio assistant for Utkarsh Singh.";
+        }
+        return base + "\n\n" + AGENT_RULES;
+    }
+
+    /**
+     * Get the number of registered tools.
+     * Useful for monitoring and debugging.
+     *
+     * @return The number of registered tool callbacks
+     */
+    public int getToolCount() {
+        var callbacks = toolCallbackProvider.getToolCallbacks();
+        return callbacks != null ? callbacks.length : 0;
+    }
+
+    /**
+     * Check if the agent is properly initialized and ready to process requests.
+     *
+     * @return true if the agent is ready, false otherwise
+     */
+    public boolean isReady() {
+        try {
+            return chatClient != null 
+                    && toolCallbackProvider != null 
+                    && getToolCount() > 0;
+        } catch (Exception e) {
+            return false;
         }
     }
 }

@@ -1,0 +1,25 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.16)
+
+2026-08-26T23:42:28.460+05:30  INFO 9812 --- [portfolio-ai-backend] [           main] c.u.portfolio.PortfolioAiApplication     : Starting PortfolioAiApplication v0.1.0 using Java 17.0.18 with PID 9812 (F:\Projects\Portfolio\backend\target\portfolio-ai-backend-0.1.0.jar started by LENOVO in F:\Projects\Portfolio\backend)
+2026-08-26T23:42:28.467+05:30  INFO 9812 --- [portfolio-ai-backend] [           main] c.u.portfolio.PortfolioAiApplication     : No active profile set, falling back to 1 default profile: "default"
+2026-08-26T23:42:32.748+05:30  INFO 9812 --- [portfolio-ai-backend] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8090 (http)
+2026-08-26T23:42:32.788+05:30  INFO 9812 --- [portfolio-ai-backend] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-08-26T23:42:32.790+05:30  INFO 9812 --- [portfolio-ai-backend] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.55]
+2026-08-26T23:42:32.901+05:30  INFO 9812 --- [portfolio-ai-backend] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-08-26T23:42:32.905+05:30  INFO 9812 --- [portfolio-ai-backend] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 4263 ms
+2026-08-26T23:42:35.389+05:30  INFO 9812 --- [portfolio-ai-backend] [           main] com.zaxxer.hikari.HikariDataSource       : portfolio-vector-pool - Starting...
+2026-08-26T23:42:35.788+05:30  INFO 9812 --- [portfolio-ai-backend] [           main] com.zaxxer.hikari.pool.HikariPool        : portfolio-vector-pool - Added connection org.postgresql.jdbc.PgConnection@69eb544f
+2026-08-26T23:42:35.797+05:30  INFO 9812 --- [portfolio-ai-backend] [           main] com.zaxxer.hikari.HikariDataSource       : portfolio-vector-pool - Start completed.
+2026-08-26T23:42:36.374+05:30  INFO 9812 --- [portfolio-ai-backend] [           main] o.s.a.v.pgvector.PgVectorStore           : Using the vector table name: portfolio_knowledge. Is empty: false
+2026-08-26T23:42:36.384+05:30  INFO 9812 --- [portfolio-ai-backend] [           main] o.s.a.v.pgvector.PgVectorStore           : Initializing PGVectorStore schema for table: portfolio_knowledge in schema: public
+2026-08-26T23:42:36.386+05:30  INFO 9812 --- [portfolio-ai-backend] [           main] o.s.a.v.pgvector.PgVectorStore           : vectorTableValidationsEnabled false
+2026-08-26T23:42:37.331+05:30  INFO 9812 --- [portfolio-ai-backend] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8090 (http) with context path '/'
+2026-08-26T23:42:37.360+05:30  INFO 9812 --- [portfolio-ai-backend] [           main] c.u.portfolio.PortfolioAiApplication     : Started PortfolioAiApplication in 10.369 seconds (process running for 11.705)

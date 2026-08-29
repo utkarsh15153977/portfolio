@@ -3,12 +3,11 @@ import { SectionShell } from "@/components/portfolio/section-shell";
 import { AiAgentChat } from "@/components/portfolio/ai-agent-chat";
 import { Reveal } from "@/components/ui/reveal";
 import {
-  aiDisclaimer,
   aiExperiments,
   type AiStatus,
   ragFlowSteps,
+  aiEvolutionPath,
 } from "@/lib/portfolio-data";
-import { aiEvolutionPath } from "@/lib/portfolio-data";
 import { cn } from "@/lib/utils";
 
 const STATUS_STYLE: Record<AiStatus, string> = {
@@ -38,16 +37,31 @@ export function AiLab() {
       }
       description="My production foundation is Java, Spring Boot and distributed systems. The AI Lab explores how LLMs, RAG and agentic workflows can extend that foundation."
     >
-      {/* disclaimer */}
+      {/* disclaimer - updated to be clearer for recruiters */}
       <Reveal>
-        <p className="mb-8 flex flex-wrap items-center gap-2 border border-warn/25 bg-warn/[0.05] px-4 py-3 font-mono text-[10px] leading-relaxed tracking-[0.18em] text-warn/90">
-          <FlaskConical className="size-3.5 shrink-0" aria-hidden />
-          {aiDisclaimer.toUpperCase()}
-        </p>
+        <div className="mb-8 flex flex-wrap items-start gap-3 border border-warn/30 bg-warn/[0.06] px-5 py-4">
+          <FlaskConical className="size-5 shrink-0 text-warn/70" aria-hidden />
+          <div>
+            <p className="font-mono text-[10px] font-bold tracking-[0.18em] text-warn/90">
+              EXPLORATION LAB — NOT PRODUCTION EXPERIENCE
+            </p>
+            <p className="mt-1 font-mono text-[10px] leading-relaxed tracking-[0.18em] text-warn/80">
+              This section shows what I&apos;m exploring, not what&apos;s in production. 
+              My production experience is Java, Spring Boot, and distributed systems — 
+              AI is a future direction I&apos;m actively learning.
+            </p>
+          </div>
+        </div>
       </Reveal>
 
-      {/* live agent console (Phase 4.6) */}
+      {/* live agent console (Experimental) */}
       <Reveal delay={0.02} className="mb-10">
+        <div className="mb-2 flex items-center gap-2">
+          <span className="inline-block size-1.5 animate-pulse rounded-full bg-warn" aria-hidden />
+          <span className="font-mono text-[9px] tracking-[0.2em] text-warn/80">
+            EXPERIMENTAL DEMO
+          </span>
+        </div>
         <AiAgentChat />
       </Reveal>
 
@@ -74,6 +88,9 @@ export function AiLab() {
                     </li>
                   ))}
               </ul>
+              <p className="mt-3 text-[10px] leading-relaxed text-ink-dim/70">
+                My core engineering foundation — built and shipped in production environments.
+              </p>
             </div>
             <div className="border-b border-line pb-4 sm:border-b-0 sm:border-r sm:pb-0 sm:pr-4">
               <h3 className="mb-2 font-mono text-[10px] tracking-[0.2em] text-warn">
@@ -91,6 +108,9 @@ export function AiLab() {
                     </li>
                   ))}
               </ul>
+              <p className="mt-3 text-[10px] leading-relaxed text-ink-dim/70">
+                Actively learning and experimenting with AI integration.
+              </p>
             </div>
             <div>
               <h3 className="mb-2 font-mono text-[10px] tracking-[0.2em] text-violet">
@@ -108,6 +128,9 @@ export function AiLab() {
                     </li>
                   ))}
               </ul>
+              <p className="mt-3 text-[10px] leading-relaxed text-ink-dim/70">
+                Where I want to take my backend expertise next.
+              </p>
             </div>
           </div>
         </div>
@@ -116,6 +139,12 @@ export function AiLab() {
       {/* RAG flow visualization */}
       <Reveal delay={0.06}>
         <div className="panel mb-10 p-6 sm:p-7">
+          <div className="mb-2 flex items-center gap-2">
+            <span className="inline-block size-1.5 rounded-full bg-violet" aria-hidden />
+            <span className="font-mono text-[9px] tracking-[0.2em] text-violet/80">
+              CONCEPTUAL ARCHITECTURE
+            </span>
+          </div>
           <p className="mb-5 font-mono text-[9px] tracking-[0.3em] text-ink-faint">
             EXPLORING RETRIEVAL-AUGMENTED GENERATION
           </p>
@@ -147,6 +176,9 @@ export function AiLab() {
               <p className="font-mono text-[9px] tracking-[0.22em] text-ink-faint">
                 CONCEPTUAL ARCHITECTURE — NOT IMPLEMENTED
               </p>
+              <p className="mt-1 font-mono text-[8px] tracking-[0.2em] text-ink-faint/70">
+                This is a learning exercise, not a production system.
+              </p>
             </div>
           </div>
         </div>
@@ -167,7 +199,7 @@ export function AiLab() {
                     STATUS_STYLE[experiment.status]
                   )}
                 >
-                  <span className="animate-pulse-dot inline-block size-1 rounded-full bg-current" aria-hidden />
+                  <span className="animate-pulse inline-block size-1 rounded-full bg-current" aria-hidden />
                   {experiment.status}
                 </span>
               </div>
@@ -191,13 +223,19 @@ export function AiLab() {
         ))}
       </div>
 
-      {/* phase 4.6 call path */}
+      {/* experimental call path - updated to be clearer */}
       <Reveal delay={0.06}>
         <aside className="mt-10 border border-line bg-surface-2/50 p-6 sm:p-7">
+          <div className="mb-2 flex items-center gap-2">
+            <span className="inline-block size-1.5 animate-pulse rounded-full bg-warn" aria-hidden />
+            <span className="font-mono text-[9px] tracking-[0.2em] text-warn/80">
+              EXPERIMENTAL CALL PATH
+            </span>
+          </div>
           <p className="font-mono text-[9px] tracking-[0.3em] text-ink-faint">
-            LIVE CALL PATH — WIRED IN PHASE 4.6
+            LIVE DEMO ARCHITECTURE — EXPLORATION ONLY
           </p>
-          <ol className="mt-4 flex flex-wrap items-center gap-x-2 gap-y-2" aria-label="Live Phase 4.6 architecture call path">
+          <ol className="mt-4 flex flex-wrap items-center gap-x-2 gap-y-2" aria-label="Experimental architecture call path">
             {PHASE2_PATH.map((node, i) => (
               <li key={node} className="flex items-center gap-2">
                 <span
@@ -205,6 +243,8 @@ export function AiLab() {
                     "border px-2.5 py-1.5 font-mono text-[9.5px] tracking-[0.16em]",
                     i === 0
                       ? "border-accent/40 bg-accent-soft text-accent"
+                      : i === PHASE2_PATH.length - 1
+                      ? "border-warn/40 bg-warn/[0.06] text-warn/90"
                       : "border-line-strong text-ink-dim"
                   )}
                 >
@@ -222,6 +262,10 @@ export function AiLab() {
               </span>
             </li>
           </ol>
+          <p className="mt-3 text-[10px] leading-relaxed text-ink-dim/70">
+            This shows the conceptual flow for a future AI-powered portfolio assistant. 
+            Currently experimental and not in production.
+          </p>
         </aside>
       </Reveal>
     </SectionShell>

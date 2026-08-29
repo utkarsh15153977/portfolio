@@ -89,7 +89,7 @@ export function BeyondCode() {
 
       <Reveal delay={0.08}>
         <p className="mt-6 font-mono text-[10px] tracking-[0.22em] text-ink-faint/85">
-          {"// DASHED CARDS ARE EDITABLE PLACEHOLDERS — UPDATE lib/portfolio-data.ts"}
+          {"// A glimpse into life beyond the terminal."}
         </p>
       </Reveal>
     </SectionShell>

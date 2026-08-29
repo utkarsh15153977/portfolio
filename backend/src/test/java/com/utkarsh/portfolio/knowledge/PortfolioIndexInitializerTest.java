@@ -6,7 +6,6 @@ import org.junit.jupiter.api.io.TempDir;
 import org.springframework.ai.document.Document;
 import org.springframework.ai.vectorstore.SimpleVectorStore;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -44,14 +43,21 @@ class PortfolioIndexInitializerTest {
 
     private Store newStore() {
         AtomicInteger calls = new AtomicInteger();
-        FakeHashEmbedder counting = new FakeHashEmbedder() {
+        // FIX: Use a separate counter instead of overriding the vector method
+        FakeHashEmbedder embedder = new FakeHashEmbedder() {
             @Override
-            float[] vector(String text) {
+            public float[] embed(Document document) {
                 calls.incrementAndGet();
-                return super.vector(text);
+                return super.embed(document);
+            }
+
+            @Override
+            public float[] embed(String text) {
+                calls.incrementAndGet();
+                return super.embed(text);
             }
         };
-        return new Store(SimpleVectorStore.builder(counting).build(), calls);
+        return new Store(SimpleVectorStore.builder(embedder).build(), calls);
     }
 
     private PortfolioIndexInitializer initializerFor(Store s, PortfolioKnowledgeLoader l,
@@ -212,9 +218,9 @@ class PortfolioIndexInitializerTest {
         assertThat(Files.readString(index)).contains("experience:domain-event-driven".substring(0, 10));
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void diagnosticSimpleVectorStoreDeleteSemantics() {
-        var s = org.springframework.ai.vectorstore.SimpleVectorStore.builder(new FakeHashEmbedder()).build();
+        var s = SimpleVectorStore.builder(new FakeHashEmbedder()).build();
         var all = loader.loadAll();
         var d = all.get(0);
         s.add(all);
