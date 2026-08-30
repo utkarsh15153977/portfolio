@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.utkarsh.ai.AiServiceApplicationTests" time="60.012" tests="18" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.utkarsh.ai.OpenAiProviderTest" time="44.537" tests="11" errors="0" skipped="0" failures="0">
   <properties>
+    <property name="jdk.tls.rejectClientInitiatedRenegotiation" value="true"/>
     <property name="java.specification.version" value="17"/>
     <property name="sun.cpu.isalist" value="amd64"/>
     <property name="sun.jnu.encoding" value="Cp1252"/>
@@ -25,6 +26,7 @@
     <property name="java.specification.vendor" value="Oracle Corporation"/>
     <property name="java.version.date" value="2026-01-20"/>
     <property name="java.home" value="C:\Program Files\Eclipse Adoptium\jdk-17.0.18.8-hotspot"/>
+    <property name="zookeeper.forceSync" value="no"/>
     <property name="file.separator" value="\"/>
     <property name="basedir" value="F:\Projects\portfolio-main\backend\ai-service"/>
     <property name="java.vm.compressedOopsMode" value="Zero based"/>
@@ -47,7 +49,7 @@
     <property name="localRepository" value="C:\Users\LENOVO\.m2\repository"/>
     <property name="java.vendor.url.bug" value="https://github.com/adoptium/adoptium-support/issues"/>
     <property name="java.io.tmpdir" value="C:\Users\LENOVO\AppData\Local\Temp\"/>
-    <property name="com.zaxxer.hikari.pool_number" value="1"/>
+    <property name="com.zaxxer.hikari.pool_number" value="3"/>
     <property name="java.version" value="17.0.18"/>
     <property name="user.dir" value="F:\Projects\portfolio-main\backend\ai-service"/>
     <property name="os.arch" value="amd64"/>
@@ -64,9 +66,9 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="61.0"/>
   </properties>
-  <testcase name="getChatStatus_pendingRequest_returnsPending" classname="com.utkarsh.ai.AiServiceApplicationTests" time="1.982">
-    <system-out><![CDATA[04:53:31.228 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.utkarsh.ai.AiServiceApplicationTests]: AiServiceApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-04:53:31.466 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.utkarsh.ai.AiServiceApplication for test class com.utkarsh.ai.AiServiceApplicationTests
+  <testcase name="successfulResponse_returnsAiContent" classname="com.utkarsh.ai.OpenAiProviderTest" time="1.021">
+    <system-out><![CDATA[2026-08-31T04:54:59.530+05:30  INFO 6476 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.utkarsh.ai.OpenAiProviderTest]: OpenAiProviderTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-08-31T04:54:59.531+05:30  INFO 6476 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.utkarsh.ai.AiServiceApplication for test class com.utkarsh.ai.OpenAiProviderTest
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -77,35 +79,29 @@
 
  :: Spring Boot ::                (v3.3.3)
 
-2026-08-31T04:53:32.373+05:30  INFO 6476 --- [           main] c.utkarsh.ai.AiServiceApplicationTests   : Starting AiServiceApplicationTests using Java 17.0.18 with PID 6476 (started by LENOVO in F:\Projects\portfolio-main\backend\ai-service)
-2026-08-31T04:53:32.373+05:30  INFO 6476 --- [           main] c.utkarsh.ai.AiServiceApplicationTests   : The following 1 profile is active: "test"
-2026-08-31T04:53:32.662+05:30  WARN 6476 --- [           main] c.u.ai.config.AiApiKeyAbsentCondition    : AI_API_KEY not configured, using MockAiProvider
-2026-08-31T04:53:32.742+05:30  WARN 6476 --- [           main] c.u.ai.config.AiApiKeyAbsentCondition    : AI_API_KEY not configured, using MockAiProvider
-2026-08-31T04:53:33.905+05:30  WARN 6476 --- [           main] c.u.ai.config.AiApiKeyAbsentCondition    : AI_API_KEY not configured, using MockAiProvider
-2026-08-31T04:53:34.802+05:30  INFO 6476 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-08-31T04:53:34.948+05:30  INFO 6476 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 127 ms. Found 2 JPA repository interfaces.
-2026-08-31T04:53:38.806+05:30  INFO 6476 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2026-08-31T04:53:38.984+05:30  INFO 6476 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.2.Final
-2026-08-31T04:53:39.104+05:30  INFO 6476 --- [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2026-08-31T04:53:39.517+05:30  INFO 6476 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2026-08-31T04:53:39.615+05:30  INFO 6476 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2026-08-31T04:53:40.162+05:30  INFO 6476 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
-2026-08-31T04:53:40.176+05:30  INFO 6476 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2026-08-31T04:53:42.976+05:30  INFO 6476 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2026-08-31T04:53:43.128+05:30  INFO 6476 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2026-08-31T04:53:44.334+05:30  WARN 6476 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2026-08-31T04:53:44.422+05:30  WARN 6476 --- [           main] .s.s.UserDetailsServiceAutoConfiguration : 
+2026-08-31T04:54:59.611+05:30  INFO 6476 --- [           main] com.utkarsh.ai.OpenAiProviderTest        : Starting OpenAiProviderTest using Java 17.0.18 with PID 6476 (started by LENOVO in F:\Projects\portfolio-main\backend\ai-service)
+2026-08-31T04:54:59.611+05:30  INFO 6476 --- [           main] com.utkarsh.ai.OpenAiProviderTest        : The following 1 profile is active: "test"
+2026-08-31T04:54:59.659+05:30  INFO 6476 --- [ SessionTracker] o.a.zookeeper.server.SessionTrackerImpl  : SessionTrackerImpl exited loop!
+2026-08-31T04:55:00.323+05:30  INFO 6476 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-08-31T04:55:00.347+05:30  INFO 6476 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 24 ms. Found 2 JPA repository interfaces.
+2026-08-31T04:55:00.892+05:30  INFO 6476 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-08-31T04:55:00.898+05:30  INFO 6476 --- [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-08-31T04:55:00.919+05:30  INFO 6476 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-08-31T04:55:00.919+05:30  INFO 6476 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Starting...
+2026-08-31T04:55:00.922+05:30  INFO 6476 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-3 - Added connection conn20: url=jdbc:h2:mem:testdb user=SA
+2026-08-31T04:55:00.922+05:30  INFO 6476 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Start completed.
+2026-08-31T04:55:01.037+05:30  INFO 6476 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-08-31T04:55:01.055+05:30  INFO 6476 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-08-31T04:55:01.319+05:30  WARN 6476 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-08-31T04:55:01.355+05:30  WARN 6476 --- [           main] .s.s.UserDetailsServiceAutoConfiguration : 
 
-Using generated security password: 6035c3e3-1700-4989-976d-c45a52ba9d8e
+Using generated security password: 275847da-2e94-44fa-9a41-392bf329d157
 
 This generated password is for development use only. Your security configuration must be updated before running your application in production.
 
-2026-08-31T04:53:44.484+05:30  INFO 6476 --- [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
-2026-08-31T04:53:45.672+05:30  INFO 6476 --- [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
-2026-08-31T04:53:47.253+05:30  INFO 6476 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
-2026-08-31T04:53:47.253+05:30  INFO 6476 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2026-08-31T04:53:47.262+05:30  INFO 6476 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 9 ms
-2026-08-31T04:53:47.443+05:30  INFO 6476 --- [           main] o.a.k.clients.admin.AdminClientConfig    : AdminClientConfig values: 
+2026-08-31T04:55:01.355+05:30  INFO 6476 --- [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2026-08-31T04:55:01.715+05:30  INFO 6476 --- [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-08-31T04:55:02.345+05:30  INFO 6476 --- [           main] o.a.k.clients.admin.AdminClientConfig    : AdminClientConfig values: 
 	auto.include.jmx.reporter = true
 	bootstrap.controllers = []
 	bootstrap.servers = [localhost:9092]
@@ -179,82 +175,80 @@ This generated password is for development use only. Your security configuration
 	ssl.truststore.password = null
 	ssl.truststore.type = JKS
 
-2026-08-31T04:53:47.764+05:30  INFO 6476 --- [           main] o.a.kafka.common.utils.AppInfoParser     : Kafka version: 3.7.1
-2026-08-31T04:53:47.764+05:30  INFO 6476 --- [           main] o.a.kafka.common.utils.AppInfoParser     : Kafka commitId: e2494e6ffb89f828
-2026-08-31T04:53:47.766+05:30  INFO 6476 --- [           main] o.a.kafka.common.utils.AppInfoParser     : Kafka startTimeMs: 1788132227762
-2026-08-31T04:53:47.807+05:30  INFO 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Node -1 disconnected.
-2026-08-31T04:53:47.809+05:30  WARN 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
-2026-08-31T04:53:47.918+05:30  INFO 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Node -1 disconnected.
-2026-08-31T04:53:47.920+05:30  WARN 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
-2026-08-31T04:53:48.140+05:30  INFO 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Node -1 disconnected.
-2026-08-31T04:53:48.142+05:30  WARN 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
-2026-08-31T04:53:48.363+05:30  INFO 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Node -1 disconnected.
-2026-08-31T04:53:48.363+05:30  WARN 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
-2026-08-31T04:53:48.923+05:30  INFO 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Node -1 disconnected.
-2026-08-31T04:53:48.923+05:30  WARN 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
-2026-08-31T04:53:49.703+05:30  INFO 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Node -1 disconnected.
-2026-08-31T04:53:49.703+05:30  WARN 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
-2026-08-31T04:53:50.708+05:30  INFO 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Node -1 disconnected.
-2026-08-31T04:53:50.708+05:30  WARN 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
-2026-08-31T04:53:51.724+05:30  INFO 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Node -1 disconnected.
-2026-08-31T04:53:51.724+05:30  WARN 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
-2026-08-31T04:53:52.590+05:30  INFO 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Node -1 disconnected.
-2026-08-31T04:53:52.591+05:30  WARN 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
-2026-08-31T04:53:53.454+05:30  INFO 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Node -1 disconnected.
-2026-08-31T04:53:53.455+05:30  WARN 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
-2026-08-31T04:53:54.410+05:30  INFO 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Node -1 disconnected.
-2026-08-31T04:53:54.410+05:30  WARN 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
-2026-08-31T04:53:55.255+05:30  INFO 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Node -1 disconnected.
-2026-08-31T04:53:55.255+05:30  WARN 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
-2026-08-31T04:53:56.313+05:30  INFO 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Node -1 disconnected.
-2026-08-31T04:53:56.315+05:30  WARN 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
-2026-08-31T04:53:57.303+05:30  INFO 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Node -1 disconnected.
-2026-08-31T04:53:57.306+05:30  WARN 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
-2026-08-31T04:53:58.363+05:30  INFO 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Node -1 disconnected.
-2026-08-31T04:53:58.363+05:30  WARN 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
-2026-08-31T04:53:59.430+05:30  INFO 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Node -1 disconnected.
-2026-08-31T04:53:59.433+05:30  WARN 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
-2026-08-31T04:54:00.388+05:30  INFO 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Node -1 disconnected.
-2026-08-31T04:54:00.388+05:30  WARN 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
-2026-08-31T04:54:01.456+05:30  INFO 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Node -1 disconnected.
-2026-08-31T04:54:01.456+05:30  WARN 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
-2026-08-31T04:54:02.317+05:30  INFO 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Node -1 disconnected.
-2026-08-31T04:54:02.317+05:30  WARN 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
-2026-08-31T04:54:03.397+05:30  INFO 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Node -1 disconnected.
-2026-08-31T04:54:03.397+05:30  WARN 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
-2026-08-31T04:54:04.453+05:30  INFO 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Node -1 disconnected.
-2026-08-31T04:54:04.453+05:30  WARN 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
-2026-08-31T04:54:05.327+05:30  INFO 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Node -1 disconnected.
-2026-08-31T04:54:05.327+05:30  WARN 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
-2026-08-31T04:54:06.315+05:30  INFO 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Node -1 disconnected.
-2026-08-31T04:54:06.315+05:30  WARN 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
-2026-08-31T04:54:07.293+05:30  INFO 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Node -1 disconnected.
-2026-08-31T04:54:07.294+05:30  WARN 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
-2026-08-31T04:54:08.250+05:30  INFO 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Node -1 disconnected.
-2026-08-31T04:54:08.250+05:30  WARN 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
-2026-08-31T04:54:09.197+05:30  INFO 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Node -1 disconnected.
-2026-08-31T04:54:09.197+05:30  WARN 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
-2026-08-31T04:54:10.243+05:30  INFO 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Node -1 disconnected.
-2026-08-31T04:54:10.243+05:30  WARN 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
-2026-08-31T04:54:11.353+05:30  INFO 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Node -1 disconnected.
-2026-08-31T04:54:11.356+05:30  WARN 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
-2026-08-31T04:54:12.395+05:30  INFO 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Node -1 disconnected.
-2026-08-31T04:54:12.399+05:30  WARN 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
-2026-08-31T04:54:13.248+05:30  INFO 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Node -1 disconnected.
-2026-08-31T04:54:13.248+05:30  WARN 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
-2026-08-31T04:54:14.108+05:30  INFO 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Node -1 disconnected.
-2026-08-31T04:54:14.108+05:30  WARN 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
-2026-08-31T04:54:15.205+05:30  INFO 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Node -1 disconnected.
-2026-08-31T04:54:15.205+05:30  WARN 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
-2026-08-31T04:54:16.266+05:30  INFO 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Node -1 disconnected.
-2026-08-31T04:54:16.266+05:30  WARN 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
-2026-08-31T04:54:17.210+05:30  INFO 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Node -1 disconnected.
-2026-08-31T04:54:17.210+05:30  WARN 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
-2026-08-31T04:54:17.784+05:30  INFO 6476 --- [| adminclient-1] o.a.k.c.a.i.AdminMetadataManager         : [AdminClient clientId=adminclient-1] Metadata update failed
+2026-08-31T04:55:02.351+05:30  INFO 6476 --- [           main] o.a.kafka.common.utils.AppInfoParser     : Kafka version: 3.7.1
+2026-08-31T04:55:02.351+05:30  INFO 6476 --- [           main] o.a.kafka.common.utils.AppInfoParser     : Kafka commitId: e2494e6ffb89f828
+2026-08-31T04:55:02.351+05:30  INFO 6476 --- [           main] o.a.kafka.common.utils.AppInfoParser     : Kafka startTimeMs: 1788132302351
+2026-08-31T04:55:02.358+05:30  INFO 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Node -1 disconnected.
+2026-08-31T04:55:02.358+05:30  WARN 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-08-31T04:55:02.465+05:30  INFO 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Node -1 disconnected.
+2026-08-31T04:55:02.467+05:30  WARN 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-08-31T04:55:02.679+05:30  INFO 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Node -1 disconnected.
+2026-08-31T04:55:02.679+05:30  WARN 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-08-31T04:55:02.886+05:30  INFO 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Node -1 disconnected.
+2026-08-31T04:55:02.886+05:30  WARN 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-08-31T04:55:03.321+05:30  INFO 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Node -1 disconnected.
+2026-08-31T04:55:03.323+05:30  WARN 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-08-31T04:55:04.295+05:30  INFO 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Node -1 disconnected.
+2026-08-31T04:55:04.295+05:30  WARN 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-08-31T04:55:05.296+05:30  INFO 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Node -1 disconnected.
+2026-08-31T04:55:05.298+05:30  WARN 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-08-31T04:55:06.364+05:30  INFO 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Node -1 disconnected.
+2026-08-31T04:55:06.364+05:30  WARN 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-08-31T04:55:07.425+05:30  INFO 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Node -1 disconnected.
+2026-08-31T04:55:07.425+05:30  WARN 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-08-31T04:55:08.480+05:30  INFO 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Node -1 disconnected.
+2026-08-31T04:55:08.480+05:30  WARN 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-08-31T04:55:09.545+05:30  INFO 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Node -1 disconnected.
+2026-08-31T04:55:09.545+05:30  WARN 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-08-31T04:55:10.615+05:30  INFO 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Node -1 disconnected.
+2026-08-31T04:55:10.615+05:30  WARN 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-08-31T04:55:11.595+05:30  INFO 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Node -1 disconnected.
+2026-08-31T04:55:11.595+05:30  WARN 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-08-31T04:55:12.676+05:30  INFO 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Node -1 disconnected.
+2026-08-31T04:55:12.676+05:30  WARN 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-08-31T04:55:13.749+05:30  INFO 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Node -1 disconnected.
+2026-08-31T04:55:13.749+05:30  WARN 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-08-31T04:55:14.726+05:30  INFO 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Node -1 disconnected.
+2026-08-31T04:55:14.726+05:30  WARN 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-08-31T04:55:15.781+05:30  INFO 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Node -1 disconnected.
+2026-08-31T04:55:15.781+05:30  WARN 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-08-31T04:55:16.731+05:30  INFO 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Node -1 disconnected.
+2026-08-31T04:55:16.731+05:30  WARN 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-08-31T04:55:17.786+05:30  INFO 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Node -1 disconnected.
+2026-08-31T04:55:17.786+05:30  WARN 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-08-31T04:55:18.658+05:30  INFO 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Node -1 disconnected.
+2026-08-31T04:55:18.658+05:30  WARN 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-08-31T04:55:19.517+05:30  INFO 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Node -1 disconnected.
+2026-08-31T04:55:19.517+05:30  WARN 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-08-31T04:55:20.466+05:30  INFO 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Node -1 disconnected.
+2026-08-31T04:55:20.466+05:30  WARN 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-08-31T04:55:21.331+05:30  INFO 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Node -1 disconnected.
+2026-08-31T04:55:21.331+05:30  WARN 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-08-31T04:55:22.426+05:30  INFO 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Node -1 disconnected.
+2026-08-31T04:55:22.426+05:30  WARN 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-08-31T04:55:23.476+05:30  INFO 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Node -1 disconnected.
+2026-08-31T04:55:23.476+05:30  WARN 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-08-31T04:55:24.576+05:30  INFO 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Node -1 disconnected.
+2026-08-31T04:55:24.577+05:30  WARN 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-08-31T04:55:25.430+05:30  INFO 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Node -1 disconnected.
+2026-08-31T04:55:25.430+05:30  WARN 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-08-31T04:55:26.442+05:30  INFO 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Node -1 disconnected.
+2026-08-31T04:55:26.442+05:30  WARN 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-08-31T04:55:27.520+05:30  INFO 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Node -1 disconnected.
+2026-08-31T04:55:27.520+05:30  WARN 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-08-31T04:55:28.518+05:30  INFO 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Node -1 disconnected.
+2026-08-31T04:55:28.518+05:30  WARN 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-08-31T04:55:29.575+05:30  INFO 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Node -1 disconnected.
+2026-08-31T04:55:29.575+05:30  WARN 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-08-31T04:55:30.526+05:30  INFO 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Node -1 disconnected.
+2026-08-31T04:55:30.526+05:30  WARN 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-08-31T04:55:31.626+05:30  INFO 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Node -1 disconnected.
+2026-08-31T04:55:31.626+05:30  WARN 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-08-31T04:55:32.357+05:30  INFO 6476 --- [| adminclient-4] o.a.k.c.a.i.AdminMetadataManager         : [AdminClient clientId=adminclient-4] Metadata update failed
 
 org.apache.kafka.common.errors.TimeoutException: Timed out waiting for a node assignment. Call: fetchMetadata
 
-2026-08-31T04:54:17.784+05:30 ERROR 6476 --- [           main] o.springframework.kafka.core.KafkaAdmin  : Could not configure topics
+2026-08-31T04:55:32.357+05:30 ERROR 6476 --- [           main] o.springframework.kafka.core.KafkaAdmin  : Could not configure topics
 
 org.springframework.kafka.KafkaException: Timed out waiting to get existing topics
 	at org.springframework.kafka.core.KafkaAdmin.lambda$checkPartitions$13(KafkaAdmin.java:550) ~[spring-kafka-3.2.3.jar:3.2.3]
@@ -358,65 +352,82 @@ Caused by: java.util.concurrent.TimeoutException: null
 	at org.springframework.kafka.core.KafkaAdmin.lambda$checkPartitions$13(KafkaAdmin.java:532) ~[spring-kafka-3.2.3.jar:3.2.3]
 	... 93 common frames omitted
 
-2026-08-31T04:54:18.221+05:30  INFO 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Node -1 disconnected.
-2026-08-31T04:54:18.221+05:30  WARN 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
-2026-08-31T04:54:19.165+05:30  INFO 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Node -1 disconnected.
-2026-08-31T04:54:19.165+05:30  WARN 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
-2026-08-31T04:54:20.110+05:30  INFO 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Node -1 disconnected.
-2026-08-31T04:54:20.113+05:30  WARN 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
-2026-08-31T04:54:21.159+05:30  INFO 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Node -1 disconnected.
-2026-08-31T04:54:21.159+05:30  WARN 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
-2026-08-31T04:54:22.044+05:30  INFO 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Node -1 disconnected.
-2026-08-31T04:54:22.044+05:30  WARN 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
-2026-08-31T04:54:22.936+05:30  INFO 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Node -1 disconnected.
-2026-08-31T04:54:22.936+05:30  WARN 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
-2026-08-31T04:54:23.894+05:30  INFO 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Node -1 disconnected.
-2026-08-31T04:54:23.894+05:30  WARN 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
-2026-08-31T04:54:24.966+05:30  INFO 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Node -1 disconnected.
-2026-08-31T04:54:24.966+05:30  WARN 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
-2026-08-31T04:54:26.028+05:30  INFO 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Node -1 disconnected.
-2026-08-31T04:54:26.028+05:30  WARN 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
-2026-08-31T04:54:27.097+05:30  INFO 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Node -1 disconnected.
-2026-08-31T04:54:27.097+05:30  WARN 6476 --- [| adminclient-1] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
-2026-08-31T04:54:27.808+05:30  INFO 6476 --- [| adminclient-1] o.a.k.clients.admin.KafkaAdminClient     : [AdminClient clientId=adminclient-1] Forcing a hard I/O thread shutdown. Requests in progress will be aborted.
-2026-08-31T04:54:27.808+05:30  INFO 6476 --- [| adminclient-1] o.a.kafka.common.utils.AppInfoParser     : App info kafka.admin.client for adminclient-1 unregistered
-2026-08-31T04:54:27.808+05:30  INFO 6476 --- [| adminclient-1] o.a.k.c.a.i.AdminMetadataManager         : [AdminClient clientId=adminclient-1] Metadata update failed
+2026-08-31T04:55:32.465+05:30  INFO 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Node -1 disconnected.
+2026-08-31T04:55:32.465+05:30  WARN 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-08-31T04:55:33.333+05:30  INFO 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Node -1 disconnected.
+2026-08-31T04:55:33.333+05:30  WARN 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-08-31T04:55:34.406+05:30  INFO 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Node -1 disconnected.
+2026-08-31T04:55:34.406+05:30  WARN 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-08-31T04:55:35.488+05:30  INFO 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Node -1 disconnected.
+2026-08-31T04:55:35.488+05:30  WARN 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-08-31T04:55:36.570+05:30  INFO 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Node -1 disconnected.
+2026-08-31T04:55:36.570+05:30  WARN 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-08-31T04:55:37.658+05:30  INFO 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Node -1 disconnected.
+2026-08-31T04:55:37.658+05:30  WARN 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-08-31T04:55:38.746+05:30  INFO 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Node -1 disconnected.
+2026-08-31T04:55:38.746+05:30  WARN 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-08-31T04:55:39.624+05:30  INFO 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Node -1 disconnected.
+2026-08-31T04:55:39.624+05:30  WARN 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-08-31T04:55:40.699+05:30  INFO 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Node -1 disconnected.
+2026-08-31T04:55:40.699+05:30  WARN 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-08-31T04:55:41.786+05:30  INFO 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Node -1 disconnected.
+2026-08-31T04:55:41.786+05:30  WARN 6476 --- [| adminclient-4] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=adminclient-4] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2026-08-31T04:55:42.364+05:30  INFO 6476 --- [| adminclient-4] o.a.k.clients.admin.KafkaAdminClient     : [AdminClient clientId=adminclient-4] Forcing a hard I/O thread shutdown. Requests in progress will be aborted.
+2026-08-31T04:55:42.364+05:30  INFO 6476 --- [| adminclient-4] o.a.kafka.common.utils.AppInfoParser     : App info kafka.admin.client for adminclient-4 unregistered
+2026-08-31T04:55:42.364+05:30  INFO 6476 --- [| adminclient-4] o.a.k.c.a.i.AdminMetadataManager         : [AdminClient clientId=adminclient-4] Metadata update failed
 
 org.apache.kafka.common.errors.TimeoutException: The AdminClient thread has exited. Call: fetchMetadata
 
-2026-08-31T04:54:27.808+05:30  INFO 6476 --- [| adminclient-1] o.a.k.clients.admin.KafkaAdminClient     : [AdminClient clientId=adminclient-1] Timed out 2 remaining operation(s) during close.
-2026-08-31T04:54:27.819+05:30  INFO 6476 --- [| adminclient-1] o.apache.kafka.common.metrics.Metrics    : Metrics scheduler closed
-2026-08-31T04:54:27.819+05:30  INFO 6476 --- [| adminclient-1] o.apache.kafka.common.metrics.Metrics    : Closing reporter org.apache.kafka.common.metrics.JmxReporter
-2026-08-31T04:54:27.819+05:30  INFO 6476 --- [| adminclient-1] o.apache.kafka.common.metrics.Metrics    : Metrics reporters closed
-2026-08-31T04:54:27.865+05:30  INFO 6476 --- [           main] c.utkarsh.ai.AiServiceApplicationTests   : Started AiServiceApplicationTests in 56.036 seconds (process running for 58.376)
+2026-08-31T04:55:42.364+05:30  INFO 6476 --- [| adminclient-4] o.a.k.clients.admin.KafkaAdminClient     : [AdminClient clientId=adminclient-4] Timed out 2 remaining operation(s) during close.
+2026-08-31T04:55:42.366+05:30  INFO 6476 --- [| adminclient-4] o.apache.kafka.common.metrics.Metrics    : Metrics scheduler closed
+2026-08-31T04:55:42.366+05:30  INFO 6476 --- [| adminclient-4] o.apache.kafka.common.metrics.Metrics    : Closing reporter org.apache.kafka.common.metrics.JmxReporter
+2026-08-31T04:55:42.366+05:30  INFO 6476 --- [| adminclient-4] o.apache.kafka.common.metrics.Metrics    : Metrics reporters closed
+2026-08-31T04:55:42.381+05:30  INFO 6476 --- [           main] com.utkarsh.ai.OpenAiProviderTest        : Started OpenAiProviderTest in 42.84 seconds (process running for 132.893)
+2026-08-31T04:55:43.333+05:30  INFO 6476 --- [           main] com.utkarsh.ai.provider.OpenAiProvider   : OpenAI generating response conversationId=1
+2026-08-31T04:55:43.405+05:30  INFO 6476 --- [           main] com.utkarsh.ai.provider.OpenAiProvider   : OpenAI response received conversationId=1 tokens=0 duration=68ms
 ]]></system-out>
-    <system-err><![CDATA[Aug 31, 2026 4:53:30 AM org.junit.platform.launcher.core.LauncherConfigurationParameters loadClasspathResource
-WARNING: Discovered 2 'junit-platform.properties' configuration files in the classpath; only the first will be used.
-Aug 31, 2026 4:53:30 AM org.junit.platform.launcher.core.LauncherConfigurationParameters loadClasspathResource
-WARNING: Discovered 2 'junit-platform.properties' configuration files in the classpath; only the first will be used.
-Aug 31, 2026 4:53:30 AM org.junit.platform.launcher.core.LauncherConfigurationParameters loadClasspathResource
-WARNING: Discovered 2 'junit-platform.properties' configuration files in the classpath; only the first will be used.
-Aug 31, 2026 4:53:30 AM org.junit.platform.launcher.core.LauncherConfigurationParameters loadClasspathResource
-WARNING: Discovered 2 'junit-platform.properties' configuration files in the classpath; only the first will be used.
-Aug 31, 2026 4:53:30 AM org.junit.platform.launcher.core.LauncherConfigurationParameters loadClasspathResource
-WARNING: Discovered 2 'junit-platform.properties' configuration files in the classpath; only the first will be used.
-]]></system-err>
   </testcase>
-  <testcase name="getConversation_wrongUser_returns404" classname="com.utkarsh.ai.AiServiceApplicationTests" time="0.112"/>
-  <testcase name="getConversations_returnsUserConversations" classname="com.utkarsh.ai.AiServiceApplicationTests" time="0.161"/>
-  <testcase name="chat_emptyMessage_returns400" classname="com.utkarsh.ai.AiServiceApplicationTests" time="0.047"/>
-  <testcase name="getConversation_returnsConversationWithMessages" classname="com.utkarsh.ai.AiServiceApplicationTests" time="0.112"/>
-  <testcase name="deleteConversation_notFound_returns404" classname="com.utkarsh.ai.AiServiceApplicationTests" time="0.033"/>
-  <testcase name="chat_withoutIdentityHeader_returns403" classname="com.utkarsh.ai.AiServiceApplicationTests" time="0.03"/>
-  <testcase name="deleteConversation_removesConversation" classname="com.utkarsh.ai.AiServiceApplicationTests" time="0.056"/>
-  <testcase name="getChatStatus_withoutIdentityHeader_returns403" classname="com.utkarsh.ai.AiServiceApplicationTests" time="0.027"/>
-  <testcase name="healthEndpoint" classname="com.utkarsh.ai.AiServiceApplicationTests" time="0.184"/>
-  <testcase name="getChatStatus_nonExistentCorrelationId_returns404" classname="com.utkarsh.ai.AiServiceApplicationTests" time="0.032"/>
-  <testcase name="getConversations_withoutIdentityHeader_returns403" classname="com.utkarsh.ai.AiServiceApplicationTests" time="0.029"/>
-  <testcase name="contextLoads" classname="com.utkarsh.ai.AiServiceApplicationTests" time="0.017"/>
-  <testcase name="deleteConversation_wrongUser_returns404" classname="com.utkarsh.ai.AiServiceApplicationTests" time="0.035"/>
-  <testcase name="chat_withBlankEmail_returns403" classname="com.utkarsh.ai.AiServiceApplicationTests" time="0.027"/>
-  <testcase name="getConversation_notFound_returns404" classname="com.utkarsh.ai.AiServiceApplicationTests" time="0.029"/>
-  <testcase name="chat_newConversation_returnsAcceptedWithCorrelationId" classname="com.utkarsh.ai.AiServiceApplicationTests" time="0.035"/>
-  <testcase name="chat_existingConversation_returnsAccepted" classname="com.utkarsh.ai.AiServiceApplicationTests" time="0.042"/>
+  <testcase name="rateLimit_throwsProviderRateLimit" classname="com.utkarsh.ai.OpenAiProviderTest" time="0.18">
+    <system-out><![CDATA[2026-08-31T04:55:43.596+05:30  INFO 6476 --- [           main] com.utkarsh.ai.provider.OpenAiProvider   : OpenAI generating response conversationId=1
+2026-08-31T04:55:43.596+05:30 ERROR 6476 --- [           main] com.utkarsh.ai.provider.OpenAiProvider   : OpenAI rate limit conversationId=1 duration=0ms
+]]></system-out>
+  </testcase>
+  <testcase name="authError_throwsProviderAuthError" classname="com.utkarsh.ai.OpenAiProviderTest" time="0.132">
+    <system-out><![CDATA[2026-08-31T04:55:43.736+05:30  INFO 6476 --- [           main] com.utkarsh.ai.provider.OpenAiProvider   : OpenAI generating response conversationId=1
+2026-08-31T04:55:43.736+05:30 ERROR 6476 --- [           main] com.utkarsh.ai.provider.OpenAiProvider   : OpenAI auth error conversationId=1 duration=0ms
+]]></system-out>
+  </testcase>
+  <testcase name="badRequest_throwsInvalidRequest" classname="com.utkarsh.ai.OpenAiProviderTest" time="0.125">
+    <system-out><![CDATA[2026-08-31T04:55:43.848+05:30  INFO 6476 --- [           main] com.utkarsh.ai.provider.OpenAiProvider   : OpenAI generating response conversationId=1
+2026-08-31T04:55:43.862+05:30 ERROR 6476 --- [           main] com.utkarsh.ai.provider.OpenAiProvider   : OpenAI bad request conversationId=1 duration=5ms: null
+]]></system-out>
+  </testcase>
+  <testcase name="serverError_throwsProviderServerError" classname="com.utkarsh.ai.OpenAiProviderTest" time="0.118">
+    <system-out><![CDATA[2026-08-31T04:55:43.976+05:30  INFO 6476 --- [           main] com.utkarsh.ai.provider.OpenAiProvider   : OpenAI generating response conversationId=1
+2026-08-31T04:55:43.985+05:30 ERROR 6476 --- [           main] com.utkarsh.ai.provider.OpenAiProvider   : OpenAI server error conversationId=1 duration=0ms: null
+]]></system-out>
+  </testcase>
+  <testcase name="emptyResponse_throwsEmptyResponseException" classname="com.utkarsh.ai.OpenAiProviderTest" time="0.015">
+    <system-out><![CDATA[2026-08-31T04:55:43.998+05:30  INFO 6476 --- [           main] com.utkarsh.ai.provider.OpenAiProvider   : OpenAI generating response conversationId=1
+]]></system-out>
+  </testcase>
+  <testcase name="noChoices_throwsEmptyResponseException" classname="com.utkarsh.ai.OpenAiProviderTest" time="0.008">
+    <system-out><![CDATA[2026-08-31T04:55:44.009+05:30  INFO 6476 --- [           main] com.utkarsh.ai.provider.OpenAiProvider   : OpenAI generating response conversationId=1
+]]></system-out>
+  </testcase>
+  <testcase name="unexpectedException_throwsProviderError" classname="com.utkarsh.ai.OpenAiProviderTest" time="0.019">
+    <system-out><![CDATA[2026-08-31T04:55:44.020+05:30  INFO 6476 --- [           main] com.utkarsh.ai.provider.OpenAiProvider   : OpenAI generating response conversationId=1
+2026-08-31T04:55:44.026+05:30 ERROR 6476 --- [           main] com.utkarsh.ai.provider.OpenAiProvider   : Unexpected error calling OpenAI conversationId=1 duration=6ms: Something unexpected
+]]></system-out>
+  </testcase>
+  <testcase name="ioException_throwsProviderTimeout" classname="com.utkarsh.ai.OpenAiProviderTest" time="0.013">
+    <system-out><![CDATA[2026-08-31T04:55:44.036+05:30  INFO 6476 --- [           main] com.utkarsh.ai.provider.OpenAiProvider   : OpenAI generating response conversationId=1
+2026-08-31T04:55:44.039+05:30 ERROR 6476 --- [           main] com.utkarsh.ai.provider.OpenAiProvider   : OpenAI network/timeout error conversationId=1 duration=3ms: Connection timed out
+]]></system-out>
+  </testcase>
+  <testcase name="blankResponse_throwsEmptyResponseException" classname="com.utkarsh.ai.OpenAiProviderTest" time="0.009">
+    <system-out><![CDATA[2026-08-31T04:55:44.051+05:30  INFO 6476 --- [           main] com.utkarsh.ai.provider.OpenAiProvider   : OpenAI generating response conversationId=1
+]]></system-out>
+  </testcase>
+  <testcase name="configValues_arePassedCorrectly" classname="com.utkarsh.ai.OpenAiProviderTest" time="0.007"/>
 </testsuite>

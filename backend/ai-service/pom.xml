@@ -65,6 +65,13 @@
             <artifactId>spring-kafka</artifactId>
         </dependency>
 
+        <!-- OpenAI Java SDK (official) -->
+        <dependency>
+            <groupId>com.openai</groupId>
+            <artifactId>openai-java</artifactId>
+            <version>4.54.0</version>
+        </dependency>
+
         <!-- Test -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

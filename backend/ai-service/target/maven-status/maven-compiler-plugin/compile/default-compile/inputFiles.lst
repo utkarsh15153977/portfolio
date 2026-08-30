@@ -1,4 +1,7 @@
 F:\Projects\portfolio-main\backend\ai-service\src\main\java\com\utkarsh\ai\AiServiceApplication.java
+F:\Projects\portfolio-main\backend\ai-service\src\main\java\com\utkarsh\ai\config\AiApiKeyAbsentCondition.java
+F:\Projects\portfolio-main\backend\ai-service\src\main\java\com\utkarsh\ai\config\AiApiKeyPresentCondition.java
+F:\Projects\portfolio-main\backend\ai-service\src\main\java\com\utkarsh\ai\config\OpenAiConfig.java
 F:\Projects\portfolio-main\backend\ai-service\src\main\java\com\utkarsh\ai\config\SecurityConfig.java
 F:\Projects\portfolio-main\backend\ai-service\src\main\java\com\utkarsh\ai\controller\AiController.java
 F:\Projects\portfolio-main\backend\ai-service\src\main\java\com\utkarsh\ai\dto\ChatAcceptedResponse.java
@@ -22,6 +25,7 @@ F:\Projects\portfolio-main\backend\ai-service\src\main\java\com\utkarsh\ai\kafka
 F:\Projects\portfolio-main\backend\ai-service\src\main\java\com\utkarsh\ai\provider\AiProvider.java
 F:\Projects\portfolio-main\backend\ai-service\src\main\java\com\utkarsh\ai\provider\AiProviderException.java
 F:\Projects\portfolio-main\backend\ai-service\src\main\java\com\utkarsh\ai\provider\MockAiProvider.java
+F:\Projects\portfolio-main\backend\ai-service\src\main\java\com\utkarsh\ai\provider\OpenAiProvider.java
 F:\Projects\portfolio-main\backend\ai-service\src\main\java\com\utkarsh\ai\repository\ChatMessageRepository.java
 F:\Projects\portfolio-main\backend\ai-service\src\main\java\com\utkarsh\ai\repository\ConversationRepository.java
 F:\Projects\portfolio-main\backend\ai-service\src\main\java\com\utkarsh\ai\service\AiService.java

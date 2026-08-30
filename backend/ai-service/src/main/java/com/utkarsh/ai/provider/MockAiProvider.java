@@ -1,13 +1,16 @@
 package com.utkarsh.ai.provider;
 
+import com.utkarsh.ai.config.AiApiKeyAbsentCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
 @Component
+@Conditional(AiApiKeyAbsentCondition.class)
 public class MockAiProvider implements AiProvider {
 
     private static final Logger log = LoggerFactory.getLogger(MockAiProvider.class);

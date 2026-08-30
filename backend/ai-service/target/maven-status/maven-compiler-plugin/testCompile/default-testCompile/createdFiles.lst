@@ -1,2 +1,3 @@
-com\utkarsh\ai\AiServiceApplicationTests.class
 com\utkarsh\ai\KafkaIntegrationTest.class
+com\utkarsh\ai\AiServiceApplicationTests.class
+com\utkarsh\ai\OpenAiProviderTest.class
