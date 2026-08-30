@@ -58,8 +58,15 @@ const personJsonLd = {
   name: profile.name,
   jobTitle: profile.role,
   email: `mailto:${profile.email}`,
-  address: { "@type": "PostalAddress", addressLocality: "Bangalore", addressCountry: "IN" },
-  alumniOf: { "@type": "CollegeOrUniversity", name: "Birla Institute of Technology, Mesra" },
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Bangalore",
+    addressCountry: "IN",
+  },
+  alumniOf: {
+    "@type": "CollegeOrUniversity",
+    name: "Birla Institute of Technology, Mesra",
+  },
   knowsAbout: [
     "Java",
     "Spring Boot",
@@ -84,8 +91,11 @@ export default function RootLayout({
       >
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(personJsonLd),
+          }}
         />
+
         {children}
       </body>
     </html>

@@ -62,8 +62,9 @@ export function Hero() {
       className="relative flex min-h-[calc(100vh-64px)] items-center px-4 py-16 sm:px-6 lg:px-8"
       aria-labelledby="hero-title"
     >
+      {/* Decorative system line — intentionally positioned above the hero title */}
       <div
-        className="hero-grid-line absolute left-0 top-1/4 h-px w-full origin-left bg-gradient-to-r from-accent/60 via-accent/10 to-transparent"
+        className="hero-grid-line pointer-events-none absolute left-0 top-[18%] h-px w-full origin-left bg-gradient-to-r from-accent/60 via-accent/10 to-transparent"
         aria-hidden="true"
         style={{ transform: "scaleX(0)" }}
       />
@@ -161,7 +162,7 @@ export function Hero() {
 
               <a
                 href={`mailto:${profile.email}`}
-                className="inline-flex size-11 items-center justify-center border border-line text-ink-dim transition-colors hover:border-accent/40 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                className="inline-flex size-11 items-center justify-center border border-line text-ink-dim transition-colors hover:border-accent/40 hover:text-accent"
                 aria-label="Send email"
               >
                 <Mail className="size-4" aria-hidden="true" />

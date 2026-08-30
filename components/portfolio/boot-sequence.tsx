@@ -1,6 +1,12 @@
 "use client";
 
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import { gsap } from "@/lib/gsap";
 import { useSystem } from "@/components/providers/system-provider";
 import { useDialogFocus } from "@/hooks/use-dialog-focus";
@@ -14,101 +20,210 @@ const STORAGE_KEY = "utkarsh-system-booted-v1";
 type Phase = "intro" | "core" | "ai" | "progress" | "ready";
 
 export function BootSequence() {
-  const { finishBoot, setScrollLocked } = useSystem();
+  const { finishBoot, setScrollLocked, scrollToSection } = useSystem();
   const reduced = usePrefersReducedMotion();
+
   const [mounted, setMounted] = useState(true);
   const [phase, setPhase] = useState<Phase>("intro");
   const [coreCount, setCoreCount] = useState(0);
   const [aiCount, setAiCount] = useState(0);
   const [progress, setProgress] = useState(0);
+
   const overlayRef = useRef<HTMLDivElement>(null);
   const exiting = useRef(false);
 
+  /**
+   * Mark the boot sequence as completed.
+   */
   const complete = useCallback(() => {
     try {
       sessionStorage.setItem(STORAGE_KEY, "1");
     } catch {
       /* private mode */
     }
+
     finishBoot();
   }, [finishBoot]);
 
-  // Reduced motion OR already booted this session -> skip entirely.
-  // Runs pre-paint on the client to avoid a boot-overlay flash.
-  const useIsoLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
+  /**
+   * Always return the user to the Hero / Home section.
+   *
+   * This is important because the browser can restore the previous
+   * scroll position after a refresh. Without explicitly resetting
+   * the position, the boot screen could disappear while the user
+   * is still positioned at AI LAB or another section.
+   */
+  const goHome = useCallback(() => {
+    requestAnimationFrame(() => {
+      const home = document.getElementById("home");
+
+      if (home) {
+        scrollToSection("home");
+      } else {
+        // Fallback if the Hero section does not have id="home".
+        window.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: reduced ? "auto" : "smooth",
+        });
+      }
+    });
+  }, [reduced, scrollToSection]);
+
+  /**
+   * Reduced motion OR already booted this session -> skip entirely.
+   *
+   * Runs pre-paint on the client to avoid a boot-overlay flash.
+   */
+  const useIsoLayoutEffect =
+    typeof window !== "undefined" ? useLayoutEffect : useEffect;
+
   useIsoLayoutEffect(() => {
     let booted = false;
+
     try {
       booted = sessionStorage.getItem(STORAGE_KEY) === "1";
     } catch {
       /* ignore */
     }
+
     if (booted || reduced) {
       setMounted(false);
       complete();
-    }
-  }, [reduced, complete]);
 
-  // Lock page scroll while the overlay is up.
+      // Even when the boot screen is skipped, always start at Home.
+      goHome();
+    }
+  }, [reduced, complete, goHome]);
+
+  /**
+   * Lock page scroll while the boot overlay is up.
+   */
   useEffect(() => {
     if (!mounted) return;
+
     setScrollLocked(true);
-    return () => setScrollLocked(false);
+
+    return () => {
+      setScrollLocked(false);
+    };
   }, [mounted, setScrollLocked]);
 
-  // Dialog focus: focus enters the boot console, Tab cycles inside,
-  // and focus returns to the previously focused element on exit.
+  /**
+   * Dialog focus:
+   * - focus enters the boot console
+   * - Tab cycles inside
+   * - focus returns to the previously focused element on exit
+   */
   useDialogFocus(mounted, overlayRef);
 
-  // Sequenced reveal.
+  /**
+   * Sequenced reveal.
+   */
   useEffect(() => {
     if (!mounted || reduced) return;
+
     const timers: ReturnType<typeof setTimeout>[] = [];
-    const t = (fn: () => void, ms: number) => timers.push(setTimeout(fn, ms));
+
+    const t = (fn: () => void, ms: number) => {
+      timers.push(setTimeout(fn, ms));
+    };
 
     t(() => setPhase("core"), 500);
-    bootSequence.coreSystems.forEach((_, i) => t(() => setCoreCount(i + 1), 700 + i * 150));
-    const aiStart = 700 + bootSequence.coreSystems.length * 150 + 250;
-    t(() => setPhase("ai"), aiStart);
-    bootSequence.intelligenceLayer.forEach((_, i) =>
-      t(() => setAiCount(i + 1), aiStart + 350 + i * 220)
-    );
-    const progStart = aiStart + 350 + bootSequence.intelligenceLayer.length * 220;
-    t(() => setPhase("progress"), progStart);
-    for (let p = 1; p <= 10; p++) t(() => setProgress(p * 10), progStart + p * 55);
-    t(() => setPhase("ready"), progStart + 620);
 
-    return () => timers.forEach(clearTimeout);
+    bootSequence.coreSystems.forEach((_, i) => {
+      t(() => setCoreCount(i + 1), 700 + i * 150);
+    });
+
+    const aiStart =
+      700 + bootSequence.coreSystems.length * 150 + 250;
+
+    t(() => setPhase("ai"), aiStart);
+
+    bootSequence.intelligenceLayer.forEach((_, i) => {
+      t(
+        () => setAiCount(i + 1),
+        aiStart + 350 + i * 220
+      );
+    });
+
+    const progStart =
+      aiStart +
+      350 +
+      bootSequence.intelligenceLayer.length * 220;
+
+    t(() => setPhase("progress"), progStart);
+
+    for (let p = 1; p <= 10; p++) {
+      t(
+        () => setProgress(p * 10),
+        progStart + p * 55
+      );
+    }
+
+    t(
+      () => setPhase("ready"),
+      progStart + 620
+    );
+
+    return () => {
+      timers.forEach(clearTimeout);
+    };
   }, [mounted, reduced]);
 
+  /**
+   * Exit the boot sequence and return to the Hero section.
+   */
   const exit = useCallback(() => {
     if (exiting.current) return;
+
     exiting.current = true;
+
     const el = overlayRef.current;
+
+    /**
+     * Complete the boot sequence first, then move to Home.
+     *
+     * requestAnimationFrame inside goHome ensures the overlay has
+     * been removed and scroll locking has been released before
+     * Lenis performs the scroll.
+     */
+    const finishExit = () => {
+      setMounted(false);
+      complete();
+      goHome();
+    };
+
     if (el && !reduced) {
       gsap.to(el, {
         yPercent: -100,
         duration: 0.7,
         ease: "power4.inOut",
-        onComplete: () => {
-          setMounted(false);
-          complete();
-        },
+        onComplete: finishExit,
       });
     } else {
-      setMounted(false);
-      complete();
+      finishExit();
     }
-  }, [complete, reduced]);
+  }, [complete, goHome, reduced]);
 
-  // Keyboard: Enter or Escape proceeds once ready.
+  /**
+   * Keyboard:
+   * Enter or Escape proceeds once the system is ready.
+   */
   useEffect(() => {
     if (phase !== "ready") return;
+
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Enter" || e.key === "Escape") exit();
+      if (e.key === "Enter" || e.key === "Escape") {
+        exit();
+      }
     };
+
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+
+    return () => {
+      window.removeEventListener("keydown", onKey);
+    };
   }, [phase, exit]);
 
   if (!mounted) return null;
@@ -125,15 +240,22 @@ export function BootSequence() {
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_20%,rgba(5,7,11,0.9)_100%)]" />
 
       <div className="relative w-[min(92vw,560px)] px-6 font-mono text-xs sm:text-sm">
-        <p className="mb-2 text-accent/70 tracking-[0.3em]">INITIALIZING…</p>
+        <p className="mb-2 text-accent/70 tracking-[0.3em]">
+          INITIALIZING…
+        </p>
+
         <h1 className="mb-1 text-lg sm:text-xl font-bold tracking-[0.18em] text-ink">
           {profile.systemName}
         </h1>
+
         <p className="mb-8 text-ink-faint text-[10px] sm:text-xs tracking-widest">
           {profile.role.toUpperCase()} {"//"} {profile.systemVersion}
         </p>
 
-        <p className="mb-3 text-[10px] tracking-[0.35em] text-ink-dim">CORE SYSTEMS</p>
+        <p className="mb-3 text-[10px] tracking-[0.35em] text-ink-dim">
+          CORE SYSTEMS
+        </p>
+
         <ul aria-label="Core systems status">
           {bootSequence.coreSystems.map((row, i) => (
             <li
@@ -144,9 +266,16 @@ export function BootSequence() {
               )}
               aria-hidden={i >= coreCount}
             >
-              <span className="text-ink-dim">{row.name}</span>
+              <span className="text-ink-dim">
+                {row.name}
+              </span>
+
               <span className="flex-1 translate-y-[-3px] border-b border-dotted border-line-strong" />
-              <BootStatus value={row.status} tone="ok" />
+
+              <BootStatus
+                value={row.status}
+                tone="ok"
+              />
             </li>
           ))}
         </ul>
@@ -154,11 +283,14 @@ export function BootSequence() {
         <p
           className={cn(
             "mt-6 mb-3 text-[10px] tracking-[0.35em] transition-opacity duration-500",
-            phase === "intro" ? "text-ink-faint" : "text-warn/80"
+            phase === "intro"
+              ? "text-ink-faint"
+              : "text-warn/80"
           )}
         >
           INTELLIGENCE LAYER
         </p>
+
         <ul aria-label="Intelligence layer status">
           {bootSequence.intelligenceLayer.map((row, i) => (
             <li
@@ -169,18 +301,27 @@ export function BootSequence() {
               )}
               aria-hidden={i >= aiCount}
             >
-              <span className="text-ink-dim">{row.name}</span>
+              <span className="text-ink-dim">
+                {row.name}
+              </span>
+
               <span className="flex-1 translate-y-[-3px] border-b border-dotted border-line-strong" />
-              <BootStatus value={row.status} tone="warn" />
+
+              <BootStatus
+                value={row.status}
+                tone="warn"
+              />
             </li>
           ))}
         </ul>
 
-        {/* progress */}
+        {/* Progress */}
         <div
           className={cn(
             "mt-8 transition-opacity duration-300",
-            phase === "progress" || phase === "ready" ? "opacity-100" : "opacity-0"
+            phase === "progress" || phase === "ready"
+              ? "opacity-100"
+              : "opacity-0"
           )}
           aria-hidden
         >
@@ -188,6 +329,7 @@ export function BootSequence() {
             <span>LOADING MODULES</span>
             <span>{progress}%</span>
           </div>
+
           <div className="h-[2px] w-full bg-surface-2 overflow-hidden rounded-full">
             <div
               className="h-full bg-accent transition-all duration-100 ease-linear"
@@ -205,10 +347,18 @@ export function BootSequence() {
                 className="corner-brackets group inline-flex items-center gap-2 border border-accent/50 bg-accent-soft px-6 py-3 font-mono text-sm font-semibold tracking-[0.25em] text-accent transition-colors hover:bg-accent hover:text-background"
               >
                 [ ENTER SYSTEM ]
+
                 <ChevronRight className="size-4 transition-transform group-hover:translate-x-1" />
               </button>
-              <span className="animate-pulse-dot inline-flex size-2 rounded-full bg-ok" aria-hidden />
-              <span className="text-[10px] tracking-[0.3em] text-ok">SYSTEM READY</span>
+
+              <span
+                className="animate-pulse-dot inline-flex size-2 rounded-full bg-ok"
+                aria-hidden
+              />
+
+              <span className="text-[10px] tracking-[0.3em] text-ok">
+                SYSTEM READY
+              </span>
             </div>
           ) : (
             <button
@@ -225,7 +375,13 @@ export function BootSequence() {
   );
 }
 
-function BootStatus({ value, tone }: { value: string; tone: "ok" | "warn" }) {
+function BootStatus({
+  value,
+  tone,
+}: {
+  value: string;
+  tone: "ok" | "warn";
+}) {
   return (
     <span
       className={cn(
@@ -236,10 +392,13 @@ function BootStatus({ value, tone }: { value: string; tone: "ok" | "warn" }) {
       <span
         className={cn(
           "inline-block size-1.5 rounded-full",
-          tone === "ok" ? "bg-ok" : "bg-warn animate-pulse-dot"
+          tone === "ok"
+            ? "bg-ok"
+            : "bg-warn animate-pulse-dot"
         )}
         aria-hidden
       />
+
       {value}
     </span>
   );
