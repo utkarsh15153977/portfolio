@@ -1,0 +1,10 @@
+F:\Projects\portfolio-main\backend\user-service\src\main\java\com\utkarsh\user\config\SecurityConfig.java
+F:\Projects\portfolio-main\backend\user-service\src\main\java\com\utkarsh\user\controller\UserController.java
+F:\Projects\portfolio-main\backend\user-service\src\main\java\com\utkarsh\user\dto\UpdateUserProfileRequest.java
+F:\Projects\portfolio-main\backend\user-service\src\main\java\com\utkarsh\user\dto\UserProfileResponse.java
+F:\Projects\portfolio-main\backend\user-service\src\main\java\com\utkarsh\user\entity\UserProfile.java
+F:\Projects\portfolio-main\backend\user-service\src\main\java\com\utkarsh\user\exception\GlobalExceptionHandler.java
+F:\Projects\portfolio-main\backend\user-service\src\main\java\com\utkarsh\user\exception\ResourceNotFoundException.java
+F:\Projects\portfolio-main\backend\user-service\src\main\java\com\utkarsh\user\repository\UserProfileRepository.java
+F:\Projects\portfolio-main\backend\user-service\src\main\java\com\utkarsh\user\service\UserService.java
+F:\Projects\portfolio-main\backend\user-service\src\main\java\com\utkarsh\user\UserServiceApplication.java

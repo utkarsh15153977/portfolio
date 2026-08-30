@@ -1,0 +1,10 @@
+com\utkarsh\user\entity\UserProfile.class
+com\utkarsh\user\exception\ResourceNotFoundException.class
+com\utkarsh\user\controller\UserController.class
+com\utkarsh\user\dto\UserProfileResponse.class
+com\utkarsh\user\repository\UserProfileRepository.class
+com\utkarsh\user\dto\UpdateUserProfileRequest.class
+com\utkarsh\user\service\UserService.class
+com\utkarsh\user\exception\GlobalExceptionHandler.class
+com\utkarsh\user\UserServiceApplication.class
+com\utkarsh\user\config\SecurityConfig.class

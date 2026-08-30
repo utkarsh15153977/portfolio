@@ -1,0 +1,3 @@
+com\utkarsh\gateway\filter\JwtAuthFilter.class
+com\utkarsh\gateway\ApiGatewayApplication.class
+com\utkarsh\gateway\config\CorsConfig.class
