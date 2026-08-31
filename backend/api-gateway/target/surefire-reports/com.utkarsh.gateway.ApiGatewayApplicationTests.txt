@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: com.utkarsh.gateway.ApiGatewayApplicationTests
--------------------------------------------------------------------------------
-Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 13.29 s -- in com.utkarsh.gateway.ApiGatewayApplicationTests

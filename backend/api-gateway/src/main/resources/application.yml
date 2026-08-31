@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8090
 
 spring:
   application:
@@ -20,7 +20,7 @@ spring:
             - StripPrefix=0
 
         - id: user-service
-          uri: http://localhost:8081
+          uri: http://localhost:8083
           predicates:
             - Path=/api/users/**
           filters:
@@ -33,12 +33,10 @@ spring:
           filters:
             - StripPrefix=0
 
-# JWT
 app:
   jwt:
-    secret: VGhpcyBpcyBhIHNlY3VyZSBzaWduaW5nIGtleSBmb3IgUE9SVEZPTElPIEFJIGF1dGggc2VydmljZSBKV1QgdG9rZW4gc2lnbmluZyBrZXk=
+    secret: ${JWT_SECRET:VGhpcyBpcyBhIHNlY3VyZSBzaWduaW5nIGtleSBmb3IgUE9SVEZPTElPIEFJIGF1dGggc2VydmljZSBKV1QgdG9rZW4gc2lnbmluZyBrZXk=}
 
-# Actuator
 management:
   endpoints:
     web:
@@ -46,4 +44,4 @@ management:
         include: health
   endpoint:
     health:
-      show-details: always
+      show-details: when-authorized
