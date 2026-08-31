@@ -5,6 +5,7 @@ import {
   SystemProvider,
   useSystem,
 } from "@/components/providers/system-provider";
+import { AuthProvider } from "@/lib/auth-context";
 import { BootSequence } from "@/components/portfolio/boot-sequence";
 import { Sidebar } from "@/components/portfolio/sidebar";
 import { MobileNav } from "@/components/portfolio/mobile-nav";
@@ -74,26 +75,27 @@ function Footer() {
 export default function Page() {
   return (
     <SystemProvider>
-      {/* -----------------------------------------------------------------
-          Accessibility
-          Keyboard users can bypass the navigation and jump directly
-          to the main portfolio content.
-          ----------------------------------------------------------------- */}
+      <AuthProvider>
+        {/* -----------------------------------------------------------------
+            Accessibility
+            Keyboard users can bypass the navigation and jump directly
+            to the main portfolio content.
+            ----------------------------------------------------------------- */}
 
-      <a
-        href="#content"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[200] focus:inline-flex focus:items-center focus:border focus:border-accent/60 focus:bg-accent focus:px-4 focus:py-2.5 focus:font-mono focus:text-xs focus:font-bold focus:tracking-[0.22em] focus:text-background"
-      >
-        SKIP TO CONTENT →
-      </a>
+        <a
+          href="#content"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[200] focus:inline-flex focus:items-center focus:border focus:border-accent/60 focus:bg-accent focus:px-4 focus:py-2.5 focus:font-mono focus:text-xs focus:font-bold focus:tracking-[0.22em] focus:text-background"
+        >
+          SKIP TO CONTENT →
+        </a>
 
-      {/* -----------------------------------------------------------------
-          System UI
-          ----------------------------------------------------------------- */}
+        {/* -----------------------------------------------------------------
+            System UI
+            ----------------------------------------------------------------- */}
 
-      <BootSequence />
-      <Sidebar />
-      <MobileNav />
+        <BootSequence />
+        <Sidebar />
+        <MobileNav />
 
       {/* -----------------------------------------------------------------
           Main application shell
@@ -116,6 +118,7 @@ export default function Page() {
 
         <Footer />
       </div>
+    </AuthProvider>
     </SystemProvider>
   );
 }

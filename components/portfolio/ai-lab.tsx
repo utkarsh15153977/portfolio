@@ -1,10 +1,17 @@
+"use client";
+
+import { useState } from "react";
 import {
   ArrowRight,
   FlaskConical,
+  Lock,
   Sparkles,
 } from "lucide-react";
 import { SectionShell } from "@/components/portfolio/section-shell";
 import { Reveal } from "@/components/ui/reveal";
+import { ChatPanel } from "@/components/portfolio/chat-panel";
+import { AuthModal } from "@/components/portfolio/auth-modal";
+import { useAuth } from "@/lib/auth-context";
 import {
   aiDisclaimer,
   aiEvolutionPath,
@@ -88,6 +95,9 @@ const PHASE2_PATH = [
 ];
 
 export function AiLab() {
+  const { user, loading } = useAuth();
+  const [authModalOpen, setAuthModalOpen] = useState(false);
+
   return (
     <SectionShell
       id="ai-lab"
@@ -115,6 +125,64 @@ export function AiLab() {
           {aiDisclaimer.toUpperCase()}
         </p>
       </Reveal>
+
+      {/* =====================================================
+          INTERACTIVE AI CHAT (when authenticated)
+          ===================================================== */}
+
+      <Reveal delay={0.02}>
+        {loading ? (
+          <div className="mb-10 border border-line bg-surface-2/50 p-6">
+            <div className="flex items-center gap-2">
+              <span className="inline-block size-1.5 rounded-full bg-warn animate-pulse-dot" />
+              <p className="font-mono text-[10px] tracking-[0.2em] text-ink-faint">
+                CHECKING AUTH STATUS...
+              </p>
+            </div>
+          </div>
+        ) : user ? (
+          <div className="mb-10">
+            <ChatPanel />
+          </div>
+        ) : (
+          <div className="mb-10 border border-line bg-surface-2/50 p-6 sm:p-7">
+            <div className="flex flex-col items-start gap-4">
+              <div className="flex items-center gap-3">
+                <span className="flex size-9 items-center justify-center rounded-sm border border-warn/35 bg-warn/[0.07] text-warn">
+                  <Lock className="size-4" aria-hidden />
+                </span>
+                <div>
+                  <p className="font-mono text-[10px] tracking-[0.3em] text-ink-faint">
+                    AUTHENTICATION REQUIRED
+                  </p>
+                  <h3 className="mt-0.5 font-display text-sm font-bold tracking-[0.16em] text-ink">
+                    LOGIN TO ACCESS AI LAB
+                  </h3>
+                </div>
+              </div>
+
+              <p className="max-w-lg text-[12px] leading-relaxed text-ink-dim">
+                Sign in to interact with the AI assistant, explore conversations,
+                and test the RAG pipeline in real-time.
+              </p>
+
+              <button
+                type="button"
+                onClick={() => setAuthModalOpen(true)}
+                className="inline-flex items-center gap-2 border border-accent/40 bg-accent-soft px-5 py-2.5 font-mono text-[10px] font-bold tracking-[0.22em] text-accent transition-all duration-200 hover:bg-accent hover:text-background"
+              >
+                <Lock className="size-3" aria-hidden />
+                LOGIN
+              </button>
+            </div>
+          </div>
+        )}
+      </Reveal>
+
+      <AuthModal
+        open={authModalOpen}
+        onClose={() => setAuthModalOpen(false)}
+      />
 
       {/* =====================================================
           RAG PIPELINE
