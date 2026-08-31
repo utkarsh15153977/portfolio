@@ -62,7 +62,7 @@ public class UserService {
         // Cache user profile on successful login
         userCacheService.cacheUser(user);
 
-        String token = jwtService.generateToken(user.getEmail());
+        String token = jwtService.generateToken(user.getEmail(), user.getName());
         return new AuthResponse(token, user.getId(), user.getEmail(), user.getName());
     }
 }

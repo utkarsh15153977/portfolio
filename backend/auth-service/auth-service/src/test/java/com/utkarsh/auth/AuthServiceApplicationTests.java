@@ -165,7 +165,7 @@ class AuthServiceApplicationTests {
     @Test
     void jwtGeneration() {
         String email = "jwt@example.com";
-        String token = jwtService.generateToken(email);
+        String token = jwtService.generateToken(email, "JWT User");
         assert token != null;
         assert !token.isEmpty();
     }
@@ -173,7 +173,7 @@ class AuthServiceApplicationTests {
     @Test
     void jwtValidation() {
         String email = "jwt@example.com";
-        String token = jwtService.generateToken(email);
+        String token = jwtService.generateToken(email, "JWT User");
         assert jwtService.isTokenValid(token);
         assert jwtService.extractEmail(token).equals(email);
     }
@@ -196,7 +196,7 @@ class AuthServiceApplicationTests {
                         .content(objectMapper.writeValueAsString(regReq)))
                 .andExpect(status().isCreated());
 
-        String token = jwtService.generateToken("protected@example.com");
+        String token = jwtService.generateToken("protected@example.com", "Protected User");
 
         mockMvc.perform(get("/api/users/me")
                         .header("Authorization", "Bearer " + token))
@@ -272,7 +272,7 @@ class AuthServiceApplicationTests {
 
     @Test
     void jwtHashConsistency() {
-        String token = jwtService.generateToken("hash@example.com");
+        String token = jwtService.generateToken("hash@example.com", "Hash User");
         String hash1 = jwtService.getTokenHash(token);
         String hash2 = jwtService.getTokenHash(token);
         assert hash1.equals(hash2);
@@ -281,7 +281,7 @@ class AuthServiceApplicationTests {
 
     @Test
     void tokenRevocationUsesRedis() {
-        String token = jwtService.generateToken("revoke@example.com");
+        String token = jwtService.generateToken("revoke@example.com", "Revoke User");
         tokenRevocationService.revoke(token);
         org.mockito.Mockito.verify(redisTemplate).opsForValue();
     }
@@ -298,7 +298,7 @@ class AuthServiceApplicationTests {
                         .content(objectMapper.writeValueAsString(regReq)))
                 .andExpect(status().isCreated());
 
-        String token = jwtService.generateToken("revoked@example.com");
+        String token = jwtService.generateToken("revoked@example.com", "Revoked User");
         String hash = jwtService.getTokenHash(token);
         when(redisTemplate.hasKey("auth:revoked:" + hash)).thenReturn(true);
 

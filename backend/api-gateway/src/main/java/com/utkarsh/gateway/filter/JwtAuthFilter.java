@@ -65,9 +65,15 @@ public class JwtAuthFilter implements GlobalFilter, Ordered {
                     .parseSignedClaims(token)
                     .getPayload();
 
-            ServerHttpRequest mutatedRequest = request.mutate()
-                    .header("X-User-Email", claims.getSubject())
-                    .build();
+            ServerHttpRequest.Builder requestBuilder = request.mutate()
+                    .header("X-User-Email", claims.getSubject());
+
+            String name = claims.get("name", String.class);
+            if (name != null && !name.isBlank()) {
+                requestBuilder.header("X-User-Name", name);
+            }
+
+            ServerHttpRequest mutatedRequest = requestBuilder.build();
 
             return chain.filter(exchange.mutate().request(mutatedRequest).build());
         } catch (ExpiredJwtException e) {

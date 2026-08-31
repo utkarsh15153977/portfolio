@@ -74,8 +74,6 @@ public class AiService {
             log.error("Kafka unavailable, failed to publish chat request for correlationId={}: {}",
                     correlationId, e.getMessage());
             pendingAiMessage.setStatus(ChatMessage.Status.FAILED);
-            chatMessageRepository.save(pendingAiMessage);
-            throw new RuntimeException("AI service temporarily unavailable", e);
         }
 
         return new ChatAcceptedResponse(correlationId, conversation.getId(), "PENDING");
