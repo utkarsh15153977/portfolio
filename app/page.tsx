@@ -5,7 +5,7 @@ import {
   SystemProvider,
   useSystem,
 } from "@/components/providers/system-provider";
-import { AuthProvider } from "@/lib/auth-context";
+
 import { BootSequence } from "@/components/portfolio/boot-sequence";
 import { Sidebar } from "@/components/portfolio/sidebar";
 import { MobileNav } from "@/components/portfolio/mobile-nav";
@@ -75,7 +75,6 @@ function Footer() {
 export default function Page() {
   return (
     <SystemProvider>
-      <AuthProvider>
         {/* -----------------------------------------------------------------
             Accessibility
             Keyboard users can bypass the navigation and jump directly
@@ -118,7 +117,6 @@ export default function Page() {
 
         <Footer />
       </div>
-    </AuthProvider>
     </SystemProvider>
   );
 }

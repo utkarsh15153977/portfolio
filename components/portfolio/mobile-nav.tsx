@@ -7,7 +7,7 @@ import { useDialogFocus } from "@/hooks/use-dialog-focus";
 import { useSystem } from "@/components/providers/system-provider";
 import { navSections, profile } from "@/lib/portfolio-data";
 import { SocialLinks, SystemStatus } from "@/components/portfolio/social-links";
-import { AuthStatus } from "@/components/portfolio/auth-status";
+
 import { cn } from "@/lib/utils";
 
 const NAV_IDS = navSections.map((section) => section.id);
@@ -247,14 +247,6 @@ export function MobileNav() {
               );
             })}
           </ul>
-
-          {/* ===================================================
-              AUTH STATUS
-              =================================================== */}
-
-          <div className="mt-6 border-t border-line/60 px-1 pt-5">
-            <AuthStatus />
-          </div>
 
           {/* ===================================================
               SOCIAL / VERSION

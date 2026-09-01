@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
-import { Check, Copy, Mail, Phone, Send } from "lucide-react";
+import { useState } from "react";
+import { Check, Copy, Mail, Phone } from "lucide-react";
 import { SectionShell } from "@/components/portfolio/section-shell";
 import { Reveal } from "@/components/ui/reveal";
 import { SocialLinks } from "@/components/portfolio/social-links";
@@ -9,7 +9,6 @@ import { contact, profile } from "@/lib/portfolio-data";
 
 export function Contact() {
   const [copied, setCopied] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
 
   const copyEmail = async () => {
     try {
@@ -22,11 +21,6 @@ export function Contact() {
     } catch {
       // Clipboard access can be unavailable in insecure contexts.
     }
-  };
-
-  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setSubmitted(true);
   };
 
   return (
@@ -173,127 +167,6 @@ export function Contact() {
               </ol>
             </div>
           </div>
-        </Reveal>
-
-        {/* =====================================================
-            TRANSMISSION FORM
-        ====================================================== */}
-        <Reveal delay={0.06}>
-          <form
-            onSubmit={onSubmit}
-            aria-label="Contact form"
-            className="panel corner-brackets relative h-full overflow-hidden p-6 sm:p-7"
-          >
-            {/* subtle form glow */}
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute -bottom-32 -right-24 size-72 rounded-full bg-accent/[0.025] blur-3xl"
-            />
-
-            <div className="relative">
-              <p className="font-mono text-[9px] tracking-[0.3em] text-ink-faint">
-                TRANSMISSION FORM
-              </p>
-
-              <p className="mt-2 max-w-lg text-[12px] leading-relaxed text-ink-faint">
-                Send a role, project, architecture problem, or just say hello.
-              </p>
-
-              <div className="mt-6 space-y-5">
-                {/* Name */}
-                <div>
-                  <label
-                    htmlFor="contact-name"
-                    className="mb-1.5 block font-mono text-[10px] tracking-[0.25em] text-ink-dim"
-                  >
-                    NAME *
-                  </label>
-
-                  <input
-                    id="contact-name"
-                    name="name"
-                    type="text"
-                    required
-                    autoComplete="name"
-                    placeholder="Ada Lovelace"
-                    className="w-full border border-line bg-background/70 px-4 py-3 font-mono text-sm text-ink placeholder:text-ink-faint/70 transition-colors hover:border-line-strong focus:border-accent/60 focus:bg-background focus:outline-none"
-                  />
-                </div>
-
-                {/* Email */}
-                <div>
-                  <label
-                    htmlFor="contact-email"
-                    className="mb-1.5 block font-mono text-[10px] tracking-[0.25em] text-ink-dim"
-                  >
-                    EMAIL *
-                  </label>
-
-                  <input
-                    id="contact-email"
-                    name="email"
-                    type="email"
-                    required
-                    autoComplete="email"
-                    placeholder="you@company.com"
-                    className="w-full border border-line bg-background/70 px-4 py-3 font-mono text-sm text-ink placeholder:text-ink-faint/70 transition-colors hover:border-line-strong focus:border-accent/60 focus:bg-background focus:outline-none"
-                  />
-                </div>
-
-                {/* Message */}
-                <div>
-                  <label
-                    htmlFor="contact-message"
-                    className="mb-1.5 block font-mono text-[10px] tracking-[0.25em] text-ink-dim"
-                  >
-                    MESSAGE *
-                  </label>
-
-                  <textarea
-                    id="contact-message"
-                    name="message"
-                    required
-                    rows={6}
-                    placeholder="Tell me about the system you're building…"
-                    className="w-full resize-y border border-line bg-background/70 px-4 py-3 font-mono text-sm text-ink placeholder:text-ink-faint/70 transition-colors hover:border-line-strong focus:border-accent/60 focus:bg-background focus:outline-none"
-                  />
-                </div>
-              </div>
-
-              {/* Submit */}
-              <button
-                type="submit"
-                className="mt-6 inline-flex w-full items-center justify-center gap-2 bg-accent px-6 py-3.5 font-mono text-xs font-bold tracking-[0.25em] text-background transition-all duration-200 hover:bg-cyan-300 hover:shadow-[0_0_24px_rgba(34,211,238,0.3)] focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2 active:translate-y-px"
-              >
-                <Send className="size-4" aria-hidden="true" />
-                TRANSMIT MESSAGE
-              </button>
-
-              {/* Phase 1 notice */}
-              <div aria-live="polite" aria-atomic="true">
-                {submitted && (
-                  <div className="mt-4 border border-warn/35 bg-warn/[0.06] p-4">
-                    <p className="font-mono text-[10px] leading-relaxed tracking-[0.14em] text-warn">
-                      <span aria-hidden="true">▲ </span>
-                      NOTE — THIS FORM IS FRONTEND-ONLY IN PHASE 1 (NO EMAIL
-                      BACKEND YET). PLEASE EMAIL ME DIRECTLY AT{" "}
-                      <a
-                        href={`mailto:${profile.email}`}
-                        className="break-all underline underline-offset-2 transition-colors hover:text-ink"
-                      >
-                        {profile.email}
-                      </a>{" "}
-                      AND I&apos;LL GET BACK TO YOU.
-                    </p>
-                  </div>
-                )}
-              </div>
-
-              <p className="mt-4 font-mono text-[9px] leading-relaxed tracking-[0.2em] text-ink-faint/80">
-                {"// NO DATA LEAVES YOUR BROWSER — BACKEND DELIVERY ARRIVES IN PHASE 2"}
-              </p>
-            </div>
-          </form>
         </Reveal>
       </div>
     </SectionShell>

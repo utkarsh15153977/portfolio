@@ -8,7 +8,7 @@ import {
   SocialLinks,
   SystemStatus,
 } from "@/components/portfolio/social-links";
-import { AuthStatus } from "@/components/portfolio/auth-status";
+
 import { initGsap, gsap, ScrollTrigger } from "@/lib/gsap";
 import { cn } from "@/lib/utils";
 
@@ -296,9 +296,6 @@ export function Sidebar() {
           ===================================================== */}
 
       <div className="space-y-4 border-t border-line px-7 py-5">
-        {/* auth status */}
-        <AuthStatus />
-
         {/* system status */}
         <SystemStatus compact />
 
