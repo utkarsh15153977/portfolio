@@ -1723,7 +1723,10 @@ export const interests: readonly InterestCard[] = [
     icon: "cpu",
     title: "TECHNOLOGY EXPLORATION",
     lines: [
-      "[ Add what you're building or tinkering with outside work ]",
+      "LLMs, RAG and AI agent systems",
+    "Distributed systems and event-driven architecture",
+    "Cloud-native backend technologies",
+    "Developer tools and emerging technologies",
     ],
     placeholder: true,
   },
@@ -1733,7 +1736,8 @@ export const interests: readonly InterestCard[] = [
     icon: "book",
     title: "BOOKS",
     lines: [
-      "[ Add books you're reading or would recommend ]",
+      "Dune",
+      "Bhagavad Gita",
     ],
     placeholder: true,
   },
@@ -1742,26 +1746,24 @@ export const interests: readonly InterestCard[] = [
     key: "movies",
     icon: "film",
     title: "MOVIES",
-    lines: ["[ Add favorites ]"],
+    lines: ["The Dark Knight Trilogy",
+    "Dark",
+    "Planet of the Apes Trilogy",
+    "The Matrix Trilogy",
+    "Dune",],
     placeholder: true,
   },
 
-  {
-    key: "travel",
-    icon: "plane",
-    title: "TRAVEL",
-    lines: [
-      "[ Add places you've been or want to go ]",
-    ],
-    placeholder: true,
-  },
 
   {
     key: "personal",
     icon: "sparkles",
     title: "PERSONAL INTERESTS",
     lines: [
-      "[ Add anything else — sports, music, communities ]",
+      "Geopolitics",
+    "Gaming",
+    "Fitness and staying active",
+    "Exploring new technologies",
     ],
     placeholder: true,
   },
